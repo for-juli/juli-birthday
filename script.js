@@ -1,66 +1,54 @@
 /* =========================
-   SECRET LOCK
+   PASSCODE
 ========================= */
+
+/*
+   CHANGE THIS TO WHATEVER
+   6-DIGIT CODE YOU WANT.
+*/
 
 const SECRET_CODE = "071223";
 
 
 function unlock() {
 
-    const input =
-        document.getElementById("secret-code");
+    const input = document.getElementById("secret-code");
+    const error = document.getElementById("lock-error");
+    const lockScreen = document.getElementById("lock-screen");
+    const mainContent = document.getElementById("main-content");
 
-    const lockScreen =
-        document.getElementById("lock-screen");
+    const code = input.value;
 
-    const error =
-        document.getElementById("lock-error");
+    if (code === SECRET_CODE) {
 
-    if (!input || !lockScreen) return;
+        error.textContent = "";
 
-
-    if (input.value === SECRET_CODE) {
-
-        error.innerHTML =
-            "welcome, juli ♡";
-
-        createHearts(15);
+        lockScreen.style.opacity = "0";
 
         setTimeout(() => {
 
-            lockScreen.classList.add("unlocked");
+            lockScreen.style.display = "none";
+            mainContent.classList.remove("hidden");
 
-            document.body.style.overflow = "auto";
+            showPage(0);
 
         }, 500);
 
     } else {
 
-        error.innerHTML =
-            "hmm, that’s not it ♡ try again";
+        error.textContent = "wrong code, try again ♡";
 
         input.value = "";
 
         input.animate(
             [
-                {
-                    transform: "translateX(0)"
-                },
-                {
-                    transform: "translateX(-6px)"
-                },
-                {
-                    transform: "translateX(6px)"
-                },
-                {
-                    transform: "translateX(-4px)"
-                },
-                {
-                    transform: "translateX(0)"
-                }
+                { transform: "translateX(0)" },
+                { transform: "translateX(-7px)" },
+                { transform: "translateX(7px)" },
+                { transform: "translateX(0)" }
             ],
             {
-                duration: 300
+                duration: 250
             }
         );
     }
@@ -68,109 +56,125 @@ function unlock() {
 
 
 /* =========================
-   OPEN THE STORY
+   PAGES
 ========================= */
 
-function openStory() {
+const pages = document.querySelectorAll(".page");
 
-    const story =
-        document.getElementById("story");
+let currentPage = 0;
 
-    if (story) {
 
-        story.scrollIntoView({
-            behavior: "smooth"
-        });
+function showPage(index) {
 
+    if (index < 0 || index >= pages.length) {
+        return;
     }
 
-    createHearts(8);
+    pages.forEach((page) => {
+        page.classList.remove("active");
+    });
+
+    pages[index].classList.add("active");
+
+    currentPage = index;
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 
 /* =========================
-   MUSIC PLAYER
+   NEXT BUTTONS
 ========================= */
 
-let currentSong = null;
+document.querySelectorAll(".next-button").forEach((button) => {
 
+    button.addEventListener("click", () => {
+
+        if (currentPage < pages.length - 1) {
+
+            showPage(currentPage + 1);
+
+        } else {
+
+            showEnding();
+
+        }
+
+    });
+
+});
+
+
+/* =========================
+   MUSIC
+========================= */
+
+let currentAudio = null;
 let currentButton = null;
 
 
-function toggleMusic(songId, button) {
+function toggleMusic(id, button) {
 
-    const song =
-        document.getElementById(songId);
+    const audio = document.getElementById(id);
 
-    if (!song) return;
-
-
-    if (
-        currentSong === song &&
-        !song.paused
-    ) {
-
-        song.pause();
-
-        button.innerHTML = "▶";
-
-        currentSong = null;
-
-        currentButton = null;
-
+    if (!audio) {
         return;
     }
 
 
-    if (currentSong) {
+    if (currentAudio && currentAudio !== audio) {
 
-        currentSong.pause();
-
-        currentSong.currentTime = 0;
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
 
         if (currentButton) {
-
-            currentButton.innerHTML = "▶";
-
+            currentButton.textContent = "▶";
         }
+
     }
 
 
-    song.play()
-        .then(() => {
+    if (audio.paused) {
 
-            button.innerHTML = "❚❚";
+        audio.play().then(() => {
 
-            currentSong = song;
+            button.textContent = "❚❚";
 
+            currentAudio = audio;
             currentButton = button;
 
-        })
-        .catch(() => {
+        }).catch(() => {
 
-            button.innerHTML = "▶";
-
-            alert(
-                "tap the play button again to start the song ♡"
-            );
+            button.textContent = "▶";
 
         });
 
+    } else {
 
-    song.onended = function () {
+        audio.pause();
 
-        button.innerHTML = "▶";
+        button.textContent = "▶";
 
-        if (currentSong === song) {
+        currentAudio = null;
+        currentButton = null;
 
-            currentSong = null;
+    }
 
+
+    audio.onended = () => {
+
+        button.textContent = "▶";
+
+        if (currentAudio === audio) {
+            currentAudio = null;
             currentButton = null;
-
         }
 
-        createHearts(5);
     };
+
 }
 
 
@@ -180,37 +184,18 @@ function toggleMusic(songId, button) {
 
 function sayYes() {
 
-    const answer =
-        document.getElementById("answer");
-
-    if (!answer) return;
-
+    const answer = document.getElementById("answer");
 
     answer.innerHTML = `
-        okay, you actually have no idea how happy
-        that made me. ♡
-
-        <br><br>
-
-        i promise i’ll take this chance seriously.
-
-        <br><br>
-
-        welcome back to my favorite chapter. 🎀♡
+        thank you, juli. ♡
+        <br>
+        i'll do my best to make this time different.
     `;
 
-
-    createHearts(25);
-
-
     setTimeout(() => {
+        showEnding();
+    }, 2200);
 
-        answer.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-    }, 200);
 }
 
 
@@ -220,146 +205,51 @@ function sayYes() {
 
 function thinkAboutIt() {
 
-    const answer =
-        document.getElementById("answer");
-
-    if (!answer) return;
-
+    const answer = document.getElementById("answer");
 
     answer.innerHTML = `
-        that’s okay. ♡
-
-        <br><br>
-
-        take all the time you need.
-        i’m not asking you to answer just because
-        i made this.
-
-        <br><br>
-
-        i just wanted you to know how i feel.
-        🎀
+        take all the time you need. 🎀
+        <br>
+        i’ll respect whatever you decide.
     `;
 
-
-    createHearts(8);
 }
 
 
 /* =========================
-   FLOATING HEART
+   ENDING
 ========================= */
 
-function createHeart() {
+function showEnding() {
 
-    const heart =
-        document.createElement("div");
+    document.querySelectorAll(".page").forEach((page) => {
+        page.classList.remove("active");
+    });
 
-    heart.className = "heart";
+    const ending = document.getElementById("ending");
 
-    heart.innerHTML = "♡";
+    ending.classList.remove("hidden");
 
+    ending.scrollIntoView({
+        behavior: "smooth"
+    });
 
-    heart.style.left =
-        Math.random() * 100 + "vw";
-
-
-    heart.style.fontSize =
-        15 + Math.random() * 20 + "px";
-
-
-    heart.style.animationDuration =
-        3 + Math.random() * 3 + "s";
-
-
-    document.body.appendChild(heart);
-
-
-    setTimeout(() => {
-
-        heart.remove();
-
-    }, 6000);
 }
 
 
 /* =========================
-   CREATE HEARTS
+   ENTER KEY
 ========================= */
 
-function createHearts(amount = 5) {
+document.addEventListener("keydown", (event) => {
 
-    for (
-        let i = 0;
-        i < amount;
-        i++
+    if (
+        event.key === "Enter" &&
+        document.activeElement === document.getElementById("secret-code")
     ) {
 
-        setTimeout(() => {
-
-            createHeart();
-
-        }, i * 150);
-
-    }
-}
-
-
-/* =========================
-   RANDOM HEARTS
-========================= */
-
-setInterval(() => {
-
-    if (Math.random() > 0.65) {
-
-        createHeart();
+        unlock();
 
     }
 
-}, 3500);
-
-
-/* =========================
-   STOP MUSIC WHEN LEAVING
-========================= */
-
-document.addEventListener(
-    "visibilitychange",
-    function () {
-
-        if (
-            document.hidden &&
-            currentSong
-        ) {
-
-            currentSong.pause();
-
-            if (currentButton) {
-
-                currentButton.innerHTML = "▶";
-
-            }
-        }
-
-    }
-);
-
-
-/* =========================
-   PAGE LOAD
-========================= */
-
-window.addEventListener(
-    "load",
-    function () {
-
-        document.body.style.overflow =
-            "hidden";
-
-        console.log(
-            "for juli ♡ everything is ready."
-        );
-
-    }
-);
+});
