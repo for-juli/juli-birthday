@@ -1,49 +1,94 @@
 /* =========================
-   SECRET CODE
+   PASSCODE
 ========================= */
 
+/*
+   CHANGE THIS IF YOU WANT
+   A DIFFERENT 6-DIGIT CODE.
+*/
 const SECRET_CODE = "071223";
 
+let enteredCode = "";
 
-function unlock() {
+const lockScreen = document.getElementById("lock-screen");
+const mainSite = document.getElementById("main-site");
+const lockError = document.getElementById("lock-error");
 
-    const input = document.getElementById("secret-code");
-    const error = document.getElementById("lock-error");
-    const lockScreen = document.getElementById("lock-screen");
-    const mainContent = document.getElementById("main-content");
 
-    if (input.value === SECRET_CODE) {
+function pressKey(number) {
 
-        error.textContent = "";
+    if (enteredCode.length >= 6) {
+        return;
+    }
+
+    enteredCode += number;
+
+    updateDots();
+
+    if (enteredCode.length === 6) {
+        setTimeout(checkCode, 180);
+    }
+}
+
+
+function deleteKey() {
+
+    enteredCode = enteredCode.slice(0, -1);
+
+    updateDots();
+
+    lockError.textContent = "";
+}
+
+
+function updateDots() {
+
+    for (let i = 1; i <= 6; i++) {
+
+        const dot = document.getElementById("dot" + i);
+
+        if (i <= enteredCode.length) {
+            dot.classList.add("filled");
+        } else {
+            dot.classList.remove("filled");
+        }
+
+    }
+}
+
+
+function checkCode() {
+
+    if (enteredCode === SECRET_CODE) {
 
         lockScreen.style.opacity = "0";
+        lockScreen.style.transition = "opacity .7s ease";
 
         setTimeout(() => {
 
             lockScreen.style.display = "none";
-            mainContent.classList.remove("hidden");
+
+            mainSite.classList.remove("hidden");
 
             showPage(0);
 
-        }, 500);
+        }, 700);
 
     } else {
 
-        error.textContent = "wrong code, try again 🩷";
+        lockError.textContent = "wrong code ♡ try again";
 
-        input.value = "";
+        enteredCode = "";
 
-        input.animate(
-            [
-                { transform: "translateX(0)" },
-                { transform: "translateX(-7px)" },
-                { transform: "translateX(7px)" },
-                { transform: "translateX(0)" }
-            ],
-            {
-                duration: 250
-            }
-        );
+        updateDots();
+
+        const card = document.querySelector(".lock-card");
+
+        card.classList.add("shake");
+
+        setTimeout(() => {
+            card.classList.remove("shake");
+        }, 450);
 
     }
 }
@@ -60,15 +105,19 @@ let currentPage = 0;
 
 function showPage(index) {
 
-    if (index < 0 || index >= pages.length) {
-        return;
+    if (index < 0) {
+        index = 0;
     }
 
-    pages.forEach((page) => {
-        page.classList.remove("active");
-    });
+    if (index >= pages.length) {
+        index = pages.length - 1;
+    }
 
-    pages[index].classList.add("active");
+    pages.forEach((page, i) => {
+
+        page.classList.toggle("active", i === index);
+
+    });
 
     currentPage = index;
 
@@ -79,22 +128,14 @@ function showPage(index) {
 }
 
 
-/* =========================
-   NEXT BUTTON
-========================= */
+/* EVERY NEXT BUTTON */
 
-document.querySelectorAll(".next-button").forEach((button) => {
+document.querySelectorAll(".next-button").forEach(button => {
 
     button.addEventListener("click", () => {
 
         if (currentPage < pages.length - 1) {
-
             showPage(currentPage + 1);
-
-        } else {
-
-            showEnding();
-
         }
 
     });
@@ -106,8 +147,7 @@ document.querySelectorAll(".next-button").forEach((button) => {
    MUSIC
 ========================= */
 
-let currentAudio = null;
-let currentButton = null;
+let currentlyPlaying = null;
 
 
 function toggleMusic(id, button) {
@@ -119,13 +159,19 @@ function toggleMusic(id, button) {
     }
 
 
-    if (currentAudio && currentAudio !== audio) {
+    if (currentlyPlaying && currentlyPlaying !== audio) {
 
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
+        currentlyPlaying.pause();
+        currentlyPlaying.currentTime = 0;
 
-        if (currentButton) {
-            currentButton.textContent = "▶";
+        const oldButton =
+            document.querySelector(
+                `.play-button[data-playing="true"]`
+            );
+
+        if (oldButton) {
+            oldButton.textContent = "▶";
+            oldButton.dataset.playing = "false";
         }
 
     }
@@ -133,29 +179,21 @@ function toggleMusic(id, button) {
 
     if (audio.paused) {
 
-        audio.play()
-            .then(() => {
+        audio.play();
 
-                button.textContent = "❚❚";
+        button.textContent = "❚❚";
+        button.dataset.playing = "true";
 
-                currentAudio = audio;
-                currentButton = button;
-
-            })
-            .catch(() => {
-
-                button.textContent = "▶";
-
-            });
+        currentlyPlaying = audio;
 
     } else {
 
         audio.pause();
 
         button.textContent = "▶";
+        button.dataset.playing = "false";
 
-        currentAudio = null;
-        currentButton = null;
+        currentlyPlaying = null;
 
     }
 
@@ -163,11 +201,9 @@ function toggleMusic(id, button) {
     audio.onended = () => {
 
         button.textContent = "▶";
+        button.dataset.playing = "false";
 
-        if (currentAudio === audio) {
-            currentAudio = null;
-            currentButton = null;
-        }
+        currentlyPlaying = null;
 
     };
 
@@ -175,7 +211,7 @@ function toggleMusic(id, button) {
 
 
 /* =========================
-   YES
+   ANSWER
 ========================= */
 
 function sayYes() {
@@ -183,71 +219,84 @@ function sayYes() {
     const answer = document.getElementById("answer");
 
     answer.innerHTML = `
-        thank you, juli. 🩷
-        <br>
-        i'll do my best to make this time different. 🌷
-    `;
+        <p>
+            you have no idea how happy that makes me. 🌷
+        </p>
 
-    setTimeout(() => {
-        showEnding();
-    }, 2500);
+        <p>
+            thank you for giving me another chance.
+            this time, i'll do my best to do things properly.
+        </p>
+
+        <button class="next-button" onclick="goToEnding()">
+            continue ♡
+        </button>
+    `;
 
 }
 
-
-/* =========================
-   NEED TIME
-========================= */
 
 function thinkAboutIt() {
 
     const answer = document.getElementById("answer");
 
     answer.innerHTML = `
-        take all the time you need. 🎀
-        <br>
-        i’ll respect whatever you decide. 🩷
+        <p>
+            take all the time you need. 🌷
+        </p>
+
+        <p>
+            you don't have to answer just because i asked.
+            whatever your answer is, i'll respect it.
+        </p>
+
+        <button class="next-button" onclick="goToEnding()">
+            continue ♡
+        </button>
     `;
 
 }
 
 
-/* =========================
-   ENDING
-========================= */
+function goToEnding() {
 
-function showEnding() {
-
-    document.querySelectorAll(".page").forEach((page) => {
-        page.classList.remove("active");
-    });
-
-    const ending = document.getElementById("ending");
-
-    ending.classList.remove("hidden");
-
-    ending.scrollIntoView({
-        behavior: "smooth"
-    });
+    showPage(pages.length - 1);
 
 }
 
 
 /* =========================
-   ENTER KEY FOR LOCK
+   SHAKE ANIMATION
 ========================= */
 
-document.addEventListener("keydown", (event) => {
+const shakeStyle = document.createElement("style");
 
-    const input = document.getElementById("secret-code");
-
-    if (
-        event.key === "Enter" &&
-        document.activeElement === input
-    ) {
-
-        unlock();
-
+shakeStyle.textContent = `
+    .shake {
+        animation: shake .4s ease;
     }
 
-});
+    @keyframes shake {
+        0%, 100% {
+            transform: translateX(0);
+        }
+
+        20% {
+            transform: translateX(-10px);
+        }
+
+        40% {
+            transform: translateX(10px);
+        }
+
+        60% {
+            transform: translateX(-7px);
+        }
+
+        80% {
+            transform: translateX(7px);
+        }
+    }
+`;
+
+document.head.appendChild(shakeStyle);
