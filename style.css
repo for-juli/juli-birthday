@@ -1,8 +1,9 @@
-/* =========================================================
-   FOR JULI 🩷
-   PINK / TULIP ROMANTIC THEME
-   CLICK-BY-CLICK PAGES
-========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:ital,wght@400;500;600&display=swap');
+
+
+/* =====================================================
+   RESET
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -10,482 +11,1246 @@
     padding: 0;
 }
 
-html,
+html {
+    width: 100%;
+    height: 100%;
+    scroll-behavior: auto;
+}
+
 body {
     width: 100%;
     min-height: 100%;
-}
 
-body {
-    font-family: Georgia, "Times New Roman", serif;
     background:
-        radial-gradient(circle at top, #ffe8f1 0%, #ffd5e5 35%, #ffc4dc 70%, #ffb7d3 100%);
-    color: #6d304b;
-    overflow-x: hidden;
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 182, 193, 0.25),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(255, 192, 203, 0.22),
+            transparent 30%
+        ),
+        #fff7fa;
+
+    color: #5d3947;
+
+    font-family: "DM Sans", sans-serif;
+
+    overflow: hidden;
+
+    -webkit-font-smoothing: antialiased;
 }
 
-/* =========================================================
-   BACKGROUND DECORATIONS
-========================================================= */
-
-body::before {
-    content: "🌷  🌷  🌷";
-    position: fixed;
-    top: 18px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 22px;
-    letter-spacing: 12px;
-    opacity: 0.55;
-    pointer-events: none;
-    z-index: 0;
-}
-
-body::after {
-    content: "🌷  🌷  🌷";
-    position: fixed;
-    bottom: 15px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
-    letter-spacing: 10px;
-    opacity: 0.45;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* =========================================================
-   LOCK SCREEN
-========================================================= */
-
-#lock-screen {
-    position: fixed;
-    inset: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-    background:
-        radial-gradient(circle at 50% 20%, #fff2f7, transparent 35%),
-        linear-gradient(145deg, #ffdbe9, #ffc2d9);
-    z-index: 9999;
-}
-
-.lock-card {
-    width: min(420px, 100%);
-    padding: 42px 28px;
-    text-align: center;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.78);
-    border: 2px solid rgba(255, 145, 184, 0.35);
-    box-shadow:
-        0 20px 60px rgba(137, 47, 83, 0.18),
-        inset 0 0 30px rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(15px);
-}
-
-.lock-bow {
-    font-size: 48px;
-    margin-bottom: 10px;
-}
-
-.lock-small {
-    font-size: 13px;
-    color: #a44c6e;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-.lock-card h1 {
-    font-size: clamp(35px, 10vw, 52px);
-    color: #d94f82;
-    margin-bottom: 15px;
-}
-
-.lock-message {
-    line-height: 1.7;
-    font-size: 15px;
-    color: #78405a;
-    margin-bottom: 18px;
-}
-
-.lock-icon {
-    font-size: 35px;
-    margin: 12px 0 15px;
-}
-
-#secret-code {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #f2a1bd;
-    border-radius: 15px;
-    background: #fff7fa;
-    color: #7b3452;
-    text-align: center;
-    font-size: 20px;
-    letter-spacing: 7px;
-    outline: none;
-    margin-bottom: 12px;
-}
-
-#secret-code:focus {
-    border-color: #df5d8b;
-    box-shadow: 0 0 0 4px rgba(223, 93, 139, 0.12);
-}
-
-.lock-card button {
-    width: 100%;
-    border: none;
-    border-radius: 15px;
-    padding: 14px 20px;
-    background: linear-gradient(135deg, #ee76a2, #d94f82);
-    color: white;
+button,
+input {
     font-family: inherit;
-    font-size: 16px;
+}
+
+button {
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(191, 65, 111, 0.25);
-    transition: 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.lock-card button:hover {
-    transform: translateY(-2px);
-}
 
-.lock-hint {
-    margin-top: 17px;
-    font-size: 12px;
-    color: #ad6682;
-}
-
-#lock-error {
-    min-height: 18px;
-    margin-top: 10px;
-    color: #c93565;
-    font-size: 13px;
-}
-
-/* =========================================================
-   MAIN CONTENT
-========================================================= */
-
-#main-content {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    min-height: 100vh;
-}
-
-/* =========================================================
-   IMPORTANT:
-   PAGE-BY-PAGE SYSTEM
-   ONLY ONE PAGE IS SHOWN
-========================================================= */
-
-.page {
-    display: none;
-    width: 100%;
-    min-height: 100vh;
-    padding: 65px 22px 90px;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    animation: pageIn 0.45s ease;
-}
-
-.page.active {
-    display: flex;
-}
-
-@keyframes pageIn {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* =========================================================
-   HIDDEN
-========================================================= */
+/* =====================================================
+   GENERAL
+===================================================== */
 
 .hidden {
     display: none !important;
 }
 
-/* =========================================================
-   CHAPTER LABEL
-========================================================= */
+
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
+
+#main-content {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100dvh;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   PAGE SYSTEM
+   ONE PAGE AT A TIME
+===================================================== */
+
+.page {
+    display: none;
+
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+
+    padding:
+        max(55px, env(safe-area-inset-top))
+        24px
+        max(85px, env(safe-area-inset-bottom))
+        24px;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    flex-direction: column;
+
+    overflow-x: hidden;
+
+    /*
+       A page can still be read if its text is longer
+       than the iPhone screen.
+       This DOES NOT move to the next page.
+       The next page is controlled only by .next-button.
+    */
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+
+    position: absolute;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 182, 193, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(255, 192, 203, 0.16),
+            transparent 30%
+        ),
+        #fff7fa;
+}
+
+.page.active {
+    display: flex;
+
+    animation: pageIn 0.45s ease both;
+}
+
+@keyframes pageIn {
+
+    from {
+        opacity: 0;
+        transform: translateX(22px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* =====================================================
+   DECORATIONS
+===================================================== */
+
+.page::before,
+.page::after {
+    content: "♡";
+
+    position: absolute;
+
+    color: rgba(219, 112, 147, 0.16);
+
+    font-size: 80px;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.page::before {
+    top: 30px;
+    left: 12px;
+
+    transform: rotate(-15deg);
+}
+
+.page::after {
+    bottom: 30px;
+    right: 15px;
+
+    transform: rotate(15deg);
+}
+
+
+/* =====================================================
+   TEXT
+===================================================== */
 
 .chapter {
-    color: #c84d78;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: lowercase;
-    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+
+    color: #c56b88;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 15px;
+
+    text-align: center;
 }
 
-/* =========================================================
-   HEADINGS
-========================================================= */
+h2 {
+    position: relative;
+    z-index: 1;
 
-.page h2 {
-    width: min(760px, 100%);
-    color: #a93662;
-    font-size: clamp(30px, 7vw, 54px);
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(31px, 8vw, 52px);
+
     line-height: 1.15;
-    margin-bottom: 28px;
-    font-weight: 600;
-}
 
-.page h2::after {
-    content: "🌷";
-    display: block;
-    font-size: 20px;
-    margin-top: 12px;
-}
+    text-align: center;
 
-/* =========================================================
-   STORY TEXT
-========================================================= */
+    color: #673e4e;
+
+    font-weight: 500;
+
+    margin-bottom: 22px;
+}
 
 .story-text {
+    position: relative;
+    z-index: 1;
+
     width: min(680px, 100%);
+
     margin: 0 auto;
 }
 
 .story-text p {
-    color: #704054;
-    font-size: 16px;
-    line-height: 1.85;
-    margin-bottom: 22px;
+    font-size: 15px;
+
+    line-height: 1.9;
+
+    margin-bottom: 20px;
+
+    text-align: center;
+
+    color: #704b58;
 }
 
-/* =========================================================
-   IMAGES
-========================================================= */
 
-.story-image,
-.gift-image {
-    display: block;
-    width: min(520px, 92vw);
-    max-height: 480px;
-    object-fit: cover;
-    border-radius: 25px;
-    border: 5px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 15px 40px rgba(135, 45, 80, 0.18);
-    margin: 0 auto 28px;
-}
-
-.gift-image {
-    max-height: 420px;
-}
-
-.photo-caption {
-    color: #9f4969;
-    font-size: 13px;
-    margin-top: -12px;
-    margin-bottom: 25px;
-    font-style: italic;
-}
-
-/* =========================================================
-   BUTTONS
-========================================================= */
+/* =====================================================
+   NEXT BUTTON
+   ONLY WAY TO CHANGE PAGE
+===================================================== */
 
 .next-button {
+    position: relative;
+    z-index: 5;
+
+    flex-shrink: 0;
+
     margin-top: 20px;
-    padding: 14px 28px;
-    border: 0;
+
+    margin-bottom: 15px;
+
+    border: 1px solid #e5a1b6;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    color: #a94f70;
+
+    padding: 13px 27px;
+
     border-radius: 999px;
-    background: linear-gradient(135deg, #ed75a3, #d74f81);
-    color: white;
-    font-family: inherit;
-    font-size: 15px;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(180, 58, 101, 0.22);
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+
+    font-size: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(185, 91, 119, 0.12);
+
+    transition: 0.25s ease;
 }
 
 .next-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 30px rgba(180, 58, 101, 0.28);
+    background: #f8d4df;
+
+    transform: translateY(-2px);
 }
 
 .next-button:active {
-    transform: translateY(0);
+    transform: scale(0.96);
 }
 
-/* =========================================================
-   DATE PAGE
-========================================================= */
+
+/* =====================================================
+   LOCK SCREEN
+===================================================== */
+
+#lock-screen {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100dvh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding:
+        max(20px, env(safe-area-inset-top))
+        25px
+        max(20px, env(safe-area-inset-bottom))
+        25px;
+
+    z-index: 1000;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #ffdce7,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #ffeaf1,
+            transparent 35%
+        ),
+        #fff7fa;
+}
+
+
+/* =====================================================
+   LOCK CARD
+===================================================== */
+
+.lock-card {
+    width: min(390px, 100%);
+
+    padding: 35px 28px 30px;
+
+    border: 1px solid rgba(211, 119, 148, 0.25);
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    backdrop-filter: blur(15px);
+
+    -webkit-backdrop-filter: blur(15px);
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 70px rgba(173, 81, 112, 0.16);
+}
+
+.lock-bow {
+    font-size: 43px;
+
+    margin-bottom: 8px;
+}
+
+.lock-small {
+    color: #c2738d;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.lock-card h1 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 43px;
+
+    color: #693f50;
+
+    font-weight: 500;
+
+    margin: 8px 0 15px;
+}
+
+.lock-message {
+    color: #825666;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+}
+
+.lock-icon {
+    font-size: 30px;
+
+    margin: 18px 0 10px;
+}
+
+
+/* =====================================================
+   IPHONE-STYLE PASSCODE
+===================================================== */
+
+/*
+   The normal input is visually hidden.
+   JS can still use it to store the passcode.
+*/
+
+#secret-code {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    border: 0;
+
+    padding: 0;
+
+    overflow: hidden;
+}
+
+
+/* Passcode circles */
+
+.passcode-dots,
+.code-dots,
+.passcode-indicator {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 18px auto 25px;
+}
+
+.passcode-dots span,
+.code-dots span,
+.passcode-indicator span {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    border: 1.5px solid #9b6175;
+
+    background: transparent;
+
+    transition: 0.15s ease;
+}
+
+.passcode-dots span.filled,
+.code-dots span.filled,
+.passcode-indicator span.filled {
+    background: #7d4a5e;
+
+    border-color: #7d4a5e;
+
+    transform: scale(1.05);
+}
+
+
+/* =====================================================
+   IPHONE KEYPAD
+===================================================== */
+
+.passcode-keypad,
+.keypad {
+    width: min(290px, 100%);
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+
+    justify-items: center;
+}
+
+
+/* Individual keypad button */
+
+.passcode-keypad button,
+.keypad button {
+    width: 72px;
+    height: 72px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    color: #653f50;
+
+    font-size: 25px;
+
+    font-weight: 400;
+
+    box-shadow:
+        0 5px 16px rgba(169, 76, 108, 0.10);
+
+    transition:
+        transform 0.12s ease,
+        background 0.12s ease;
+}
+
+.passcode-keypad button span,
+.keypad button span {
+    display: block;
+}
+
+.passcode-keypad button small,
+.keypad button small {
+    display: block;
+
+    margin-top: -2px;
+
+    color: #8e6271;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.passcode-keypad button:active,
+.keypad button:active {
+    transform: scale(0.91);
+
+    background: #f4d6e1;
+}
+
+
+/* Delete */
+
+.passcode-keypad .delete,
+.keypad .delete {
+    background: transparent;
+
+    box-shadow: none;
+
+    color: #875066;
+
+    font-size: 15px;
+}
+
+
+/* Empty keypad space */
+
+.passcode-keypad .empty,
+.keypad .empty {
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   OLD UNLOCK BUTTON
+   Hide it because passcode should auto-unlock.
+===================================================== */
+
+.lock-card > button {
+    display: none;
+}
+
+
+/* =====================================================
+   LOCK ERROR
+===================================================== */
+
+#lock-error {
+    min-height: 20px;
+
+    margin-top: 8px;
+
+    color: #b64c6d;
+
+    font-size: 13px;
+}
+
+.lock-hint {
+    margin-top: 14px;
+
+    color: #b27689;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   PASSCODE SHAKE
+===================================================== */
+
+.passcode-shake {
+    animation: passcodeShake 0.35s ease;
+}
+
+@keyframes passcodeShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-8px);
+    }
+
+    50% {
+        transform: translateX(8px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+}
+
+
+/* =====================================================
+   IMAGES
+===================================================== */
+
+.story-image,
+.gift-image {
+    position: relative;
+
+    z-index: 1;
+
+    width: min(430px, 90%);
+
+    max-height: 430px;
+
+    object-fit: cover;
+
+    border-radius: 25px;
+
+    margin: 8px auto 28px;
+
+    display: block;
+
+    border: 6px solid rgba(255, 255, 255, 0.85);
+
+    box-shadow:
+        0 18px 45px rgba(158, 76, 104, 0.18);
+}
+
+
+/* =====================================================
+   NEW FLOWER PHOTO
+   IMG_2106.jpeg
+===================================================== */
+
+.flower-image {
+    position: relative;
+
+    z-index: 1;
+
+    width: min(430px, 90%);
+
+    max-height: 430px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 10px auto 28px;
+
+    padding: 8px;
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 6px solid rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 18px 45px rgba(158, 76, 104, 0.18);
+}
+
+
+/*
+   If your HTML simply uses:
+
+   <img src="IMG_2106.jpeg">
+
+   inside a page, this also styles it.
+*/
+
+.page img[src="IMG_2106.jpeg"] {
+    position: relative;
+
+    z-index: 1;
+
+    width: min(430px, 90%);
+
+    max-height: 430px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 10px auto 28px;
+
+    padding: 8px;
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 6px solid rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 18px 45px rgba(158, 76, 104, 0.18);
+}
+
+.photo-caption {
+    position: relative;
+
+    z-index: 1;
+
+    color: #b35d7c;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    margin-top: -15px;
+
+    margin-bottom: 28px;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   DATE CARD
+===================================================== */
 
 .date-card {
     display: flex;
-    justify-content: center;
-    align-items: center;
+
     gap: 12px;
-    margin: 5px 0 35px;
+
+    margin: 20px 0 35px;
 }
 
 .date-card span {
-    width: 70px;
-    height: 70px;
+    width: 75px;
+    height: 80px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+    background: #f8d6e1;
+
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.78);
-    color: #d24f7d;
-    font-size: 25px;
-    font-weight: bold;
-    box-shadow: 0 8px 25px rgba(153, 45, 83, 0.12);
+
+    color: #a34f6d;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 28px;
+
+    box-shadow:
+        0 10px 25px rgba(180, 84, 114, 0.12);
 }
 
-/* =========================================================
-   MUSIC PAGES
-========================================================= */
+
+/* =====================================================
+   COURTING PAGE
+===================================================== */
+
+.final-letter {
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255, 182, 193, 0.2),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(255, 192, 203, 0.18),
+            transparent 30%
+        );
+}
+
+.final-letter h2 {
+    color: #9e4d69;
+}
+
+.final-letter .story-text {
+    max-width: 680px;
+}
+
+.final-letter .story-text p {
+    line-height: 1.9;
+}
+
+
+/* =====================================================
+   MUSIC
+===================================================== */
 
 .music-page {
-    padding-top: 70px;
+    padding-bottom: 120px;
 }
 
-.music-dedication {
-    color: #a44a6b;
-    font-size: 14px;
-    font-style: italic;
-    margin-top: -12px;
-    margin-bottom: 25px;
-}
-
+.song-card,
 .music-card {
-    width: min(520px, 100%);
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 18px;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.75);
-    border: 1px solid rgba(218, 90, 132, 0.2);
-    box-shadow: 0 12px 35px rgba(133, 40, 77, 0.12);
-    text-align: left;
-    margin-bottom: 28px;
+    width: min(550px, 100%);
+
+    padding: 25px;
+
+    margin: 10px 0;
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.72);
+
+    border: 1px solid rgba(214, 132, 157, 0.25);
+
+    text-align: center;
+
+    box-shadow:
+        0 12px 35px rgba(180, 80, 110, 0.1);
 }
 
-.play-button {
-    flex: 0 0 55px;
-    width: 55px;
-    height: 55px;
-    border: 0;
-    border-radius: 50%;
-    background: #e35b89;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 7px 18px rgba(184, 53, 98, 0.22);
+.song-number {
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    color: #c16a87;
+
+    margin-bottom: 7px;
+}
+
+.song-card h3 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 27px;
+
+    font-weight: 500;
+
+    color: #713f52;
+
+    margin-bottom: 5px;
+}
+
+.song-card p {
+    color: #956173;
+
+    font-size: 13px;
+
+    margin-bottom: 15px;
 }
 
 .music-info {
     display: flex;
+
     flex-direction: column;
-    gap: 6px;
+
+    gap: 5px;
 }
 
 .music-info strong {
-    color: #923653;
-    font-size: 17px;
+    color: #713f52;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 20px;
 }
 
 .music-info span {
-    color: #a85b77;
+    color: #956173;
+
     font-size: 13px;
+}
+
+.play-button {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: #d77f9b;
+
+    color: white;
+
+    font-size: 18px;
+
+    transition: 0.25s;
+
+    margin: 10px auto;
+}
+
+.play-button:hover {
+    transform: scale(1.08);
+
+    background: #c96989;
+}
+
+.hidden-video {
+    display: none;
 }
 
 .dedication {
     width: min(680px, 100%);
+
+    color: #704b58;
+
+    font-size: 15px;
+
+    line-height: 1.9;
+
+    text-align: center;
 }
 
 .dedication p {
-    color: #704054;
-    font-size: 15px;
-    line-height: 1.85;
     margin-bottom: 20px;
 }
 
-/* =========================================================
-   FINAL LETTER / COURTING PAGE
-========================================================= */
 
-.final-letter {
-    padding-bottom: 100px;
-}
-
-.final-letter h2 {
-    color: #b83e69;
-}
-
-.final-letter .story-text {
-    width: min(720px, 100%);
-}
-
-.final-letter .story-text p {
-    text-align: left;
-}
-
-/* =========================================================
-   COURTING PHOTO
-   IMG_2106.jpeg
-========================================================= */
-
-.courting-photo {
-    width: min(430px, 90vw);
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 28px;
-    border: 5px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 18px 45px rgba(137, 40, 79, 0.2);
-    margin: 0 auto 30px;
-}
-
-/* =========================================================
-   QUESTION PAGE
-========================================================= */
+/* =====================================================
+   FINAL QUESTION
+===================================================== */
 
 .question-page {
-    padding-bottom: 80px;
+    min-height: 100dvh;
 }
 
 .final-question {
-    width: min(650px, 100%);
-    margin: 20px auto 30px;
-    padding: 25px;
+    width: min(600px, 100%);
+
+    margin: 25px auto;
+
+    padding: 27px 20px;
+
+    text-align: center;
+
     border-radius: 25px;
-    background: rgba(255, 255, 255, 0.78);
-    border: 2px solid rgba(224, 92, 137, 0.2);
-    color: #a73662;
-    font-size: clamp(20px, 5vw, 30px);
-    line-height: 1.5;
-    box-shadow: 0 12px 35px rgba(145, 41, 81, 0.1);
+
+    background: #f8d6e1;
+
+    color: #873f5b;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(22px, 5vw, 32px);
+
+    box-shadow:
+        0 15px 40px rgba(183, 84, 116, 0.12);
 }
 
 .answer-buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
+
     gap: 12px;
+
+    justify-content: center;
+
     flex-wrap: wrap;
+
+    margin-top: 10px;
 }
 
 .answer-buttons button {
-    padding: 13px 24px;
-    border: 0;
-    border
+    border: none;
+
+    border-radius: 999px;
+
+    padding: 14px 28px;
+
+    font-size: 14px;
+
+    transition: 0.25s;
+}
+
+.answer-buttons button:first-child {
+    background: #d77f9b;
+
+    color: white;
+}
+
+.answer-buttons button:last-child {
+    background: white;
+
+    color: #a85572;
+
+    border: 1px solid #e1a1b5;
+}
+
+.answer-buttons button:hover {
+    transform: translateY(-2px);
+}
+
+#answer {
+    min-height: 35px;
+
+    text-align: center;
+
+    margin-top: 18px;
+
+    color: #a04f6c;
+
+    font-family: "Playfair Display", serif;
+}
+
+
+/* =====================================================
+   ENDING
+===================================================== */
+
+.ending {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100dvh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 40px 25px;
+
+    overflow-y: auto;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #ffe5ed,
+            #fff7fa 65%
+        );
+
+    z-index: 2000;
+}
+
+.ending-heart {
+    font-size: 70px;
+
+    color: #ce6d8b;
+
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+.ending h2 {
+    margin-top: 15px;
+}
+
+.ending p {
+    max-width: 520px;
+
+    line-height: 1.8;
+
+    color: #77505e;
+
+    margin-bottom: 15px;
+}
+
+.signature {
+    color: #b45775 !important;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   MOBILE / IPHONE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .page {
+        padding:
+            50px 20px
+            max(75px, env(safe-area-inset-bottom))
+            20px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    .story-text p {
+        font-size: 14px;
+
+        line-height: 1.8;
+    }
+
+    .story-image,
+    .gift-image,
+    .flower-image,
+    .page img[src="IMG_2106.jpeg"] {
+        width: 94%;
+
+        max-height: 360px;
+    }
+
+    .date-card span {
+        width: 65px;
+
+        height: 70px;
+
+        font-size: 24px;
+    }
+
+    .lock-card {
+        width: min(350px, 100%);
+
+        padding: 32px 20px 25px;
+    }
+
+    .lock-card h1 {
+        font-size: 40px;
+    }
+
+    .lock-message {
+        font-size: 13px;
+    }
+
+    .passcode-keypad,
+    .keypad {
+        width: 270px;
+
+        gap: 10px;
+    }
+
+    .passcode-keypad button,
+    .keypad button {
+        width: 68px;
+
+        height: 68px;
+
+        font-size: 23px;
+    }
+
+    .passcode-dots,
+    .code-dots,
+    .passcode-indicator {
+        gap: 10px;
+    }
+
+    .passcode-dots span,
+    .code-dots span,
+    .passcode-indicator span {
+        width: 10px;
+
+        height: 10px;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL IPHONE
+===================================================== */
+
+@media (max-width: 375px) {
+
+    .lock-card {
+        padding:
+            27px 17px 22px;
+    }
+
+    .lock-bow {
+        font-size: 36px;
+    }
+
+    .lock-card h1 {
+        font-size: 36px;
+    }
+
+    .lock-icon {
+        margin: 10px 0;
+    }
+
+    .passcode-keypad,
+    .keypad {
+        width: 250px;
+
+        gap: 8px;
+    }
+
+    .passcode-keypad button,
+    .keypad button {
+        width: 63px;
+
+        height: 63px;
+
+        font-size: 21px;
+    }
+
+}
+
+
+/* =====================================================
+   IPHONE SAFE AREA
+===================================================== */
+
+@supports (height: 100dvh) {
+
+    #lock-screen,
+    #main-content,
+    .page,
+    .ending {
+        height: 100dvh;
+    }
+}
+
+
+/* =====================================================
+   HIDE SCROLLBAR
+===================================================== */
+
+.page::-webkit-scrollbar,
