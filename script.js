@@ -1,140 +1,61 @@
-/* =========================================
-   PASSCODE
-========================================= */
+// =========================
+// PASSCODE / UNLOCK
+// =========================
 
 const SECRET_CODE = "071223";
-
-let enteredCode = "";
 
 function unlock() {
     const input = document.getElementById("secret-code");
     const error = document.getElementById("lock-error");
-
-    if (!input) return;
+    const lockScreen = document.getElementById("lock-screen");
+    const mainContent = document.getElementById("main-content");
 
     if (input.value === SECRET_CODE) {
+        lockScreen.classList.add("hidden");
+        mainContent.classList.remove("hidden");
 
-        document.getElementById("lock-screen").style.display = "none";
+        error.textContent = "";
 
-        document.body.classList.add("story-open");
-
-        startPages();
-
+        // Start from the first page
+        showPage(0);
     } else {
-
-        if (error) {
-            error.textContent = "wrong code ♡ try again";
-        }
-
+        error.textContent = "wrong code 🥺 try again 🌷";
         input.value = "";
-
+        input.focus();
     }
 }
 
 
-/* =========================================
-   OPEN SURPRISE
-========================================= */
+// =========================
+// PAGE SYSTEM
+// =========================
 
-function openStory() {
-
-    document.body.classList.add("story-open");
-
-    const hero = document.querySelector(".hero");
-
-    if (hero) {
-        hero.classList.remove("page-active");
-    }
-
-    startPages();
-}
-
-
-/* =========================================
-   PAGE SYSTEM
-========================================= */
-
-let pages = [];
 let currentPage = 0;
 
-function startPages() {
-
-    /*
-       These are the actual story pages.
-
-       Hero is excluded because it is the opening.
-       Lock screen is excluded too.
-    */
-
-    pages = Array.from(
-        document.querySelectorAll(
-            "main > section, body > section:not(.hero)"
-        )
-    ).filter(page => {
-
-        return (
-            !page.classList.contains("hero") &&
-            page.id !== "ending"
-        );
-
-    });
-
-    /*
-       Hide everything first.
-    */
-
-    pages.forEach(page => {
-
-        page.classList.remove("page-active");
-
-        const oldButton =
-            page.querySelector(".page-next-button");
-
-        if (oldButton) {
-            oldButton.remove();
-        }
-
-    });
-
-    currentPage = 0;
-
-    showPage(currentPage);
-}
-
-
-/* =========================================
-   SHOW ONE PAGE
-========================================= */
+const pages = document.querySelectorAll(".page");
 
 function showPage(index) {
 
-    if (!pages.length) return;
-
-    pages.forEach(page => {
-        page.classList.remove("page-active");
-    });
-
-    const page = pages[index];
-
-    if (!page) return;
-
-    page.classList.add("page-active");
-
-    /*
-       Don't add a next button to the final
-       question page.
-    */
-
-    const isFinalQuestion =
-        page.classList.contains("question-section") ||
-        page.classList.contains("final-letter");
-
-    if (!isFinalQuestion && index < pages.length - 1) {
-
-        addNextButton(page);
-
+    if (index < 0 || index >= pages.length) {
+        return;
     }
 
+    pages.forEach((page, i) => {
+
+        page.classList.remove("active");
+
+        if (i === index) {
+            page.classList.add("active");
+        }
+
+    });
+
+    currentPage = index;
+
+    // Stop all music when changing page
+    stopAllMusic();
+
+    // Scroll back to top of the current page
     window.scrollTo({
         top: 0,
         behavior: "instant"
@@ -142,127 +63,297 @@ function showPage(index) {
 }
 
 
-/* =========================================
-   NEXT BUTTON
-========================================= */
+// =========================
+// NEXT BUTTONS
+// =========================
 
-function addNextButton(page) {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const button = document.createElement("button");
+    const nextButtons = document.querySelectorAll(".next-button");
 
-    button.className = "page-next-button";
+    nextButtons.forEach(button => {
 
-    button.innerHTML = "continue 🌷";
+        button.addEventListener("click", () => {
 
-    button.addEventListener("click", function () {
-
-        /*
-           Stop music from continuing when
-           changing pages.
-        */
-
-        document.querySelectorAll("audio, video").forEach(media => {
-
-            try {
-                media.pause();
-            } catch (e) {}
+            if (currentPage < pages.length - 1) {
+                showPage(currentPage + 1);
+            }
 
         });
 
-        currentPage++;
-
-        showPage(currentPage);
-
     });
 
-    page.appendChild(button);
-}
+});
 
 
-/* =========================================
-   MUSIC
-========================================= */
+// =========================
+// MUSIC SYSTEM
+// =========================
 
-function toggleMusic(id, button) {
+let currentlyPlaying = null;
 
-    const music = document.getElementById(id);
+function toggleMusic(songId, button) {
 
-    if (!music) return;
+    const song = document.getElementById(songId);
 
-    /*
-       Stop all other songs.
-    */
-
-    document.querySelectorAll("audio, video").forEach(media => {
-
-        if (media !== music) {
-            try {
-                media.pause();
-            } catch (e) {}
-        }
-
-    });
-
-    if (music.paused) {
-
-        music.play();
-
-        if (button) {
-            button.innerHTML = "❚❚";
-        }
-
-    } else {
-
-        music.pause();
-
-        if (button) {
-            button.innerHTML = "▶";
-        }
-
+    if (!song) {
+        return;
     }
 
+    // If this song is already playing
+    if (!song.paused) {
+
+        song.pause();
+
+        button.textContent = "▶";
+
+        currentlyPlaying = null;
+
+        return;
+    }
+
+
+    // Stop any other music
+    stopAllMusic();
+
+
+    // Play selected song
+    song.play()
+        .then(() => {
+
+            button.textContent = "❚❚";
+
+            currentlyPlaying = songId;
+
+        })
+        .catch(error => {
+
+            console.log("Music could not be played:", error);
+
+        });
 }
 
 
-/* =========================================
-   FINAL ANSWERS
-========================================= */
+// =========================
+// STOP ALL MUSIC
+// =========================
+
+function stopAllMusic() {
+
+    const songs = document.querySelectorAll("audio");
+
+    songs.forEach(song => {
+
+        song.pause();
+        song.currentTime = 0;
+
+    });
+
+
+    const playButtons = document.querySelectorAll(".play-button");
+
+    playButtons.forEach(button => {
+
+        button.textContent = "▶";
+
+    });
+
+
+    currentlyPlaying = null;
+}
+
+
+// =========================
+// WHEN SONG ENDS
+// =========================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const songs = document.querySelectorAll("audio");
+
+    songs.forEach(song => {
+
+        song.addEventListener("ended", () => {
+
+            const button = song
+                .closest(".music-page")
+                ?.querySelector(".play-button");
+
+            if (button) {
+                button.textContent = "▶";
+            }
+
+            currentlyPlaying = null;
+
+        });
+
+    });
+
+});
+
+
+// =========================
+// YES BUTTON
+// =========================
 
 function sayYes() {
 
-    const answer =
-        document.getElementById("answer");
+    const answer = document.getElementById("answer");
 
-    if (!answer) return;
+    if (!answer) {
+        return;
+    }
 
     answer.innerHTML = `
         <div class="answer-message">
-            <h3>you said yes ♡</h3>
+            <div class="answer-heart">💗</div>
+
+            <h3>you said yes 🥹🩷</h3>
+
             <p>
-                thank you, juli. i'll do my best to make
-                this second chance worth it. 🌷
+                thank you for giving me another chance.
+                i promise i'll do my best this time. 🌷
+            </p>
+
+            <p>
+                let's make this chapter of our story
+                something worth remembering. 🩷
+            </p>
+
+            <p class="answer-signature">
+                yours truly,<br>
+                miguel 🩷
             </p>
         </div>
     `;
 
+    createHearts();
+
+    // Disable buttons after answering
+    const buttons = document.querySelectorAll(
+        ".answer-buttons button"
+    );
+
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
 }
 
+
+// =========================
+// I NEED TIME BUTTON
+// =========================
 
 function thinkAboutIt() {
 
-    const answer =
-        document.getElementById("answer");
+    const answer = document.getElementById("answer");
 
-    if (!answer) return;
+    if (!answer) {
+        return;
+    }
 
     answer.innerHTML = `
         <div class="answer-message">
-            <h3>take your time ♡</h3>
+
+            <div class="answer-heart">🌷</div>
+
+            <h3>take your time, juli 🩷</h3>
+
             <p>
-                you don't have to rush your answer.
-                i'll understand. 🌷
+                you don't have to answer immediately.
+                i'll respect whatever you decide.
             </p>
+
+            <p>
+                i just wanted you to know how i truly feel
+                and how much you still mean to me.
+            </p>
+
+            <p>
+                no pressure. take all the time you need. 🎀
+            </p>
+
+            <p class="answer-signature">
+                yours truly,<br>
+                miguel 🩷
+            </p>
+
         </div>
     `;
-
 }
+
+
+// =========================
+// LITTLE FLOATING HEARTS
+// =========================
+
+function createHearts() {
+
+    for (let i = 0; i < 15; i++) {
+
+        const heart = document.createElement("div");
+
+        heart.className = "floating-heart";
+
+        heart.textContent = "🩷";
+
+        heart.style.left =
+            Math.random() * 100 + "vw";
+
+        heart.style.animationDelay =
+            Math.random() * 2 + "s";
+
+        heart.style.fontSize =
+            (15 + Math.random() * 20) + "px";
+
+        document.body.appendChild(heart);
+
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 5000);
+
+    }
+}
+
+
+// =========================
+// INITIAL STATE
+// =========================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Make sure only the first page is active
+    pages.forEach((page, index) => {
+
+        if (index === 0) {
+            page.classList.add("active");
+        } else {
+            page.classList.remove("active");
+        }
+
+    });
+
+    currentPage = 0;
+
+
+    // Make sure main content starts hidden
+    const mainContent =
+        document.getElementById("main-content");
+
+    if (mainContent) {
+        mainContent.classList.add("hidden");
+    }
+
+
+    // Keep lock screen visible
+    const lockScreen =
+        document.getElementById("lock-screen");
+
+    if (lockScreen) {
+        lockScreen.classList.remove("hidden");
+    }
+
+});
