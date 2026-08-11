@@ -1,10 +1,80 @@
 /* =========================
+   SECRET LOCK
+========================= */
+
+const SECRET_CODE = "071223";
+
+
+function unlock() {
+
+    const input =
+        document.getElementById("secret-code");
+
+    const lockScreen =
+        document.getElementById("lock-screen");
+
+    const error =
+        document.getElementById("lock-error");
+
+    if (!input || !lockScreen) return;
+
+
+    if (input.value === SECRET_CODE) {
+
+        error.innerHTML =
+            "welcome, juli ♡";
+
+        createHearts(15);
+
+        setTimeout(() => {
+
+            lockScreen.classList.add("unlocked");
+
+            document.body.style.overflow = "auto";
+
+        }, 500);
+
+    } else {
+
+        error.innerHTML =
+            "hmm, that’s not it ♡ try again";
+
+        input.value = "";
+
+        input.animate(
+            [
+                {
+                    transform: "translateX(0)"
+                },
+                {
+                    transform: "translateX(-6px)"
+                },
+                {
+                    transform: "translateX(6px)"
+                },
+                {
+                    transform: "translateX(-4px)"
+                },
+                {
+                    transform: "translateX(0)"
+                }
+            ],
+            {
+                duration: 300
+            }
+        );
+    }
+}
+
+
+/* =========================
    OPEN THE STORY
 ========================= */
 
 function openStory() {
 
-    const story = document.getElementById("story");
+    const story =
+        document.getElementById("story");
 
     if (story) {
 
@@ -23,32 +93,34 @@ function openStory() {
 ========================= */
 
 let currentSong = null;
+
 let currentButton = null;
 
 
 function toggleMusic(songId, button) {
 
-    const song = document.getElementById(songId);
+    const song =
+        document.getElementById(songId);
 
     if (!song) return;
 
 
-    // pause current song
-
-    if (currentSong === song && !song.paused) {
+    if (
+        currentSong === song &&
+        !song.paused
+    ) {
 
         song.pause();
 
         button.innerHTML = "▶";
 
         currentSong = null;
+
         currentButton = null;
 
         return;
     }
 
-
-    // stop previous song
 
     if (currentSong) {
 
@@ -57,12 +129,12 @@ function toggleMusic(songId, button) {
         currentSong.currentTime = 0;
 
         if (currentButton) {
+
             currentButton.innerHTML = "▶";
+
         }
     }
 
-
-    // play selected song
 
     song.play()
         .then(() => {
@@ -70,6 +142,7 @@ function toggleMusic(songId, button) {
             button.innerHTML = "❚❚";
 
             currentSong = song;
+
             currentButton = button;
 
         })
@@ -84,8 +157,6 @@ function toggleMusic(songId, button) {
         });
 
 
-    // song ended
-
     song.onended = function () {
 
         button.innerHTML = "▶";
@@ -93,12 +164,12 @@ function toggleMusic(songId, button) {
         if (currentSong === song) {
 
             currentSong = null;
+
             currentButton = null;
 
         }
 
         createHearts(5);
-
     };
 }
 
@@ -109,7 +180,8 @@ function toggleMusic(songId, button) {
 
 function sayYes() {
 
-    const answer = document.getElementById("answer");
+    const answer =
+        document.getElementById("answer");
 
     if (!answer) return;
 
@@ -148,7 +220,8 @@ function sayYes() {
 
 function thinkAboutIt() {
 
-    const answer = document.getElementById("answer");
+    const answer =
+        document.getElementById("answer");
 
     if (!answer) return;
 
@@ -179,7 +252,8 @@ function thinkAboutIt() {
 
 function createHeart() {
 
-    const heart = document.createElement("div");
+    const heart =
+        document.createElement("div");
 
     heart.className = "heart";
 
@@ -215,7 +289,11 @@ function createHeart() {
 
 function createHearts(amount = 5) {
 
-    for (let i = 0; i < amount; i++) {
+    for (
+        let i = 0;
+        i < amount;
+        i++
+    ) {
 
         setTimeout(() => {
 
@@ -250,7 +328,10 @@ document.addEventListener(
     "visibilitychange",
     function () {
 
-        if (document.hidden && currentSong) {
+        if (
+            document.hidden &&
+            currentSong
+        ) {
 
             currentSong.pause();
 
@@ -259,7 +340,6 @@ document.addEventListener(
                 currentButton.innerHTML = "▶";
 
             }
-
         }
 
     }
@@ -273,6 +353,9 @@ document.addEventListener(
 window.addEventListener(
     "load",
     function () {
+
+        document.body.style.overflow =
+            "hidden";
 
         console.log(
             "for juli ♡ everything is ready."
