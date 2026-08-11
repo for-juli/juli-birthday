@@ -12,6 +12,54 @@
 <body>
 
     <!-- =========================
+         LOCK SCREEN
+    ========================== -->
+
+    <div id="lock-screen">
+
+        <div class="lock-card">
+
+            <div class="lock-bow">🎀</div>
+
+            <p class="lock-small">
+                a little something for you
+            </p>
+
+            <h1>for juli ♡</h1>
+
+            <p class="lock-message">
+                this little world is just for you.
+                <br>
+                enter the secret code to open it.
+            </p>
+
+            <div class="lock-icon">🔐</div>
+
+            <input
+                type="password"
+                id="secret-code"
+                maxlength="6"
+                inputmode="numeric"
+                placeholder="••••••"
+                onkeydown="if(event.key === 'Enter') unlock()"
+            >
+
+            <button onclick="unlock()">
+                unlock ♡
+            </button>
+
+            <p id="lock-error"></p>
+
+            <p class="lock-hint">
+                a date that means something to us ♡
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
          OPENING
     ========================== -->
 
