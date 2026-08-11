@@ -33,6 +33,232 @@ body {
 }
 
 
+/* =========================
+   LOCK SCREEN
+========================= */
+
+#lock-screen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999999;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 24px;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #ffd3e3,
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #ffc4d9,
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #fff7fa,
+            #ffe1eb
+        );
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+#lock-screen.unlocked {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.lock-card {
+    width: 100%;
+    max-width: 380px;
+
+    padding: 42px 28px;
+
+    text-align: center;
+
+    background: rgba(255, 250, 252, 0.92);
+
+    border: 1px solid #f0b7ca;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(190, 78, 117, 0.18);
+
+    position: relative;
+
+    animation:
+        lockAppear 0.8s ease;
+}
+
+.lock-card::before {
+    content: "♡";
+
+    position: absolute;
+
+    top: 18px;
+    left: 22px;
+
+    color: #e89ab4;
+
+    font-size: 22px;
+}
+
+.lock-card::after {
+    content: "♡";
+
+    position: absolute;
+
+    bottom: 18px;
+    right: 22px;
+
+    color: #e89ab4;
+
+    font-size: 22px;
+}
+
+.lock-bow {
+    font-size: 55px;
+
+    margin-bottom: 12px;
+
+    animation:
+        bowFloat 3s ease-in-out infinite;
+}
+
+.lock-small {
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    font-size: 9px;
+
+    color: #c56b88;
+
+    margin-bottom: 10px;
+}
+
+.lock-card h1 {
+    font-size: 42px;
+
+    color: #583744;
+
+    margin-bottom: 18px;
+}
+
+.lock-message {
+    color: #8d6171;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    margin-bottom: 20px;
+}
+
+.lock-icon {
+    font-size: 30px;
+
+    margin-bottom: 15px;
+}
+
+#secret-code {
+    width: 100%;
+
+    height: 52px;
+
+    border-radius: 50px;
+
+    border: 1px solid #e6a8bd;
+
+    background: #fff8fb;
+
+    text-align: center;
+
+    font-size: 20px;
+
+    letter-spacing: 7px;
+
+    color: #c76183;
+
+    outline: none;
+
+    margin-bottom: 12px;
+}
+
+#secret-code:focus {
+    border-color: #d87596;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(232, 138, 170, 0.13);
+}
+
+.lock-card button {
+    width: 100%;
+
+    height: 50px;
+
+    border-radius: 50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e98aaa,
+            #d96f96
+        );
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 10px 25px
+        rgba(205, 91, 128, 0.22);
+
+    transition: 0.2s ease;
+}
+
+.lock-card button:active {
+    transform: scale(0.96);
+}
+
+#lock-error {
+    min-height: 20px;
+
+    margin-top: 12px;
+
+    font-size: 12px;
+
+    color: #c75f80;
+}
+
+.lock-hint {
+    margin-top: 18px;
+
+    font-size: 10px;
+
+    color: #b47b8d;
+
+    letter-spacing: 0.5px;
+}
+
+
 /* GLOBAL */
 
 section {
@@ -43,21 +269,31 @@ section::before {
     content: "♡";
 
     position: absolute;
+
     top: 25px;
     right: 25px;
 
     font-size: 25px;
-    color: rgba(226, 123, 157, 0.28);
+
+    color:
+        rgba(
+            226,
+            123,
+            157,
+            0.28
+        );
 }
 
 section::after {
     content: "🎀";
 
     position: absolute;
+
     bottom: 25px;
     left: 25px;
 
     font-size: 22px;
+
     opacity: 0.55;
 }
 
@@ -72,8 +308,11 @@ p {
     min-height: 100vh;
 
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
+
     align-items: center;
 
     text-align: center;
@@ -102,22 +341,26 @@ p {
     content: "🎀";
 
     position: absolute;
+
     top: 45px;
 
     font-size: 65px;
 
-    animation: bowFloat 3s ease-in-out infinite;
+    animation:
+        bowFloat 3s ease-in-out infinite;
 }
 
 .hero::after {
     content: "♡  ˚₊‧  ♡  ˚₊‧  ♡";
 
     position: absolute;
+
     bottom: 50px;
 
     color: #e8a0b7;
 
     letter-spacing: 7px;
+
     font-size: 14px;
 }
 
@@ -135,7 +378,11 @@ p {
 }
 
 .hero h1 {
-    font-size: clamp(46px, 13vw, 78px);
+    font-size: clamp(
+        46px,
+        13vw,
+        78px
+    );
 
     line-height: 1;
 
@@ -156,6 +403,7 @@ p {
     max-width: 320px;
 
     line-height: 1.8;
+
     font-size: 14px;
 
     color: #8f6272;
@@ -168,7 +416,9 @@ p {
 
 button {
     font-family: inherit;
+
     border: none;
+
     cursor: pointer;
 }
 
@@ -187,11 +437,17 @@ button {
         );
 
     font-size: 14px;
+
     font-weight: 600;
 
     box-shadow:
         0 12px 25px
-        rgba(205, 91, 128, 0.25);
+        rgba(
+            205,
+            91,
+            128,
+            0.25
+        );
 
     transition: 0.25s ease;
 }
@@ -259,7 +515,12 @@ button {
 
     box-shadow:
         0 15px 35px
-        rgba(190, 87, 121, 0.15);
+        rgba(
+            190,
+            87,
+            121,
+            0.15
+        );
 
     margin: 25px 0 38px;
 
@@ -269,7 +530,9 @@ button {
 }
 
 .story-image:hover {
-    transform: rotate(0deg) scale(1.01);
+    transform:
+        rotate(0deg)
+        scale(1.01);
 }
 
 
@@ -329,6 +592,7 @@ button {
 
 .music-card {
     width: 100%;
+
     max-width: 430px;
 
     margin: auto;
@@ -343,7 +607,13 @@ button {
 
     text-align: left;
 
-    background: rgba(255,255,255,0.82);
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.82
+        );
 
     border: 1px solid #f1bfd1;
 
@@ -351,11 +621,17 @@ button {
 
     box-shadow:
         0 15px 35px
-        rgba(186, 78, 117, 0.12);
+        rgba(
+            186,
+            78,
+            117,
+            0.12
+        );
 }
 
 .play-button {
     width: 55px;
+
     height: 55px;
 
     border-radius: 50%;
@@ -375,7 +651,12 @@ button {
 
     box-shadow:
         0 7px 18px
-        rgba(208, 91, 128, 0.25);
+        rgba(
+            208,
+            91,
+            128,
+            0.25
+        );
 }
 
 .music-info {
@@ -388,11 +669,13 @@ button {
 
 .music-info strong {
     color: #583744;
+
     font-size: 16px;
 }
 
 .music-info span {
     color: #a16b7d;
+
     font-size: 12px;
 }
 
@@ -400,6 +683,7 @@ button {
     position: absolute;
 
     width: 1px;
+
     height: 1px;
 
     opacity: 0;
@@ -419,7 +703,13 @@ button {
 
     text-align: left;
 
-    background: rgba(255,255,255,0.6);
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.6
+        );
 
     border: 1px solid #f3c5d5;
 
@@ -434,6 +724,7 @@ button {
     position: absolute;
 
     top: -15px;
+
     left: 20px;
 
     font-size: 25px;
@@ -480,11 +771,13 @@ button {
 
 .date-card span {
     width: 70px;
+
     height: 70px;
 
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     border-radius: 50%;
@@ -494,11 +787,17 @@ button {
     color: white;
 
     font-size: 19px;
+
     font-weight: 700;
 
     box-shadow:
         0 8px 20px
-        rgba(205, 91, 128, 0.18);
+        rgba(
+            205,
+            91,
+            128,
+            0.18
+        );
 }
 
 .date-section .story-text {
@@ -599,7 +898,12 @@ button {
 
     box-shadow:
         0 20px 45px
-        rgba(181, 76, 112, 0.18);
+        rgba(
+            181,
+            76,
+            112,
+            0.18
+        );
 
     transform: rotate(1deg);
 
@@ -683,11 +987,12 @@ button {
 
     margin: 50px auto 35px;
 
-    font-size: clamp(
-        30px,
-        8vw,
-        52px
-    );
+    font-size:
+        clamp(
+            30px,
+            8vw,
+            52px
+        );
 
     line-height: 1.15;
 
@@ -734,7 +1039,12 @@ button {
 
     box-shadow:
         0 10px 25px
-        rgba(205, 91, 128, 0.2);
+        rgba(
+            205,
+            91,
+            128,
+            0.2
+        );
 }
 
 .answer-buttons button:last-child {
@@ -880,6 +1190,25 @@ button {
     }
 }
 
+@keyframes lockAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
 
 /* MOBILE */
 
@@ -907,6 +1236,7 @@ button {
 
     .story-text {
         font-size: 15px;
+
         line-height: 1.9;
     }
 
@@ -941,5 +1271,13 @@ button {
 
     .answer-buttons button {
         width: 230px;
+    }
+
+    .lock-card {
+        padding: 35px 22px;
+    }
+
+    .lock-card h1 {
+        font-size: 38px;
     }
 }
