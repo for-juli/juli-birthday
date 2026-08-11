@@ -1,11 +1,6 @@
 /* =========================
-   PASSCODE
+   SECRET CODE
 ========================= */
-
-/*
-   CHANGE THIS TO WHATEVER
-   6-DIGIT CODE YOU WANT.
-*/
 
 const SECRET_CODE = "071223";
 
@@ -17,9 +12,7 @@ function unlock() {
     const lockScreen = document.getElementById("lock-screen");
     const mainContent = document.getElementById("main-content");
 
-    const code = input.value;
-
-    if (code === SECRET_CODE) {
+    if (input.value === SECRET_CODE) {
 
         error.textContent = "";
 
@@ -36,7 +29,7 @@ function unlock() {
 
     } else {
 
-        error.textContent = "wrong code, try again ♡";
+        error.textContent = "wrong code, try again 🩷";
 
         input.value = "";
 
@@ -51,12 +44,13 @@ function unlock() {
                 duration: 250
             }
         );
+
     }
 }
 
 
 /* =========================
-   PAGES
+   PAGE NAVIGATION
 ========================= */
 
 const pages = document.querySelectorAll(".page");
@@ -86,7 +80,7 @@ function showPage(index) {
 
 
 /* =========================
-   NEXT BUTTONS
+   NEXT BUTTON
 ========================= */
 
 document.querySelectorAll(".next-button").forEach((button) => {
@@ -139,18 +133,20 @@ function toggleMusic(id, button) {
 
     if (audio.paused) {
 
-        audio.play().then(() => {
+        audio.play()
+            .then(() => {
 
-            button.textContent = "❚❚";
+                button.textContent = "❚❚";
 
-            currentAudio = audio;
-            currentButton = button;
+                currentAudio = audio;
+                currentButton = button;
 
-        }).catch(() => {
+            })
+            .catch(() => {
 
-            button.textContent = "▶";
+                button.textContent = "▶";
 
-        });
+            });
 
     } else {
 
@@ -187,14 +183,14 @@ function sayYes() {
     const answer = document.getElementById("answer");
 
     answer.innerHTML = `
-        thank you, juli. ♡
+        thank you, juli. 🩷
         <br>
-        i'll do my best to make this time different.
+        i'll do my best to make this time different. 🌷
     `;
 
     setTimeout(() => {
         showEnding();
-    }, 2200);
+    }, 2500);
 
 }
 
@@ -210,7 +206,7 @@ function thinkAboutIt() {
     answer.innerHTML = `
         take all the time you need. 🎀
         <br>
-        i’ll respect whatever you decide.
+        i’ll respect whatever you decide. 🩷
     `;
 
 }
@@ -238,14 +234,16 @@ function showEnding() {
 
 
 /* =========================
-   ENTER KEY
+   ENTER KEY FOR LOCK
 ========================= */
 
 document.addEventListener("keydown", (event) => {
 
+    const input = document.getElementById("secret-code");
+
     if (
         event.key === "Enter" &&
-        document.activeElement === document.getElementById("secret-code")
+        document.activeElement === input
     ) {
 
         unlock();
