@@ -9,23 +9,64 @@ html {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-        "Helvetica Neue", Arial, sans-serif;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
 
     background: #fff5f8;
-    color: #3b2730;
+    color: #5b3947;
 
     overflow-x: hidden;
 }
+
+:root {
+    --pink: #e98aaa;
+    --dark-pink: #c95f83;
+    --soft-pink: #ffdce8;
+    --light-pink: #fff1f6;
+    --white: #fffafb;
+    --text: #654652;
+    --muted: #a66d81;
+}
+
+
+/* GLOBAL */
 
 section {
     position: relative;
 }
 
+section::before {
+    content: "♡";
 
-/* =========================
-   HERO
-========================= */
+    position: absolute;
+    top: 25px;
+    right: 25px;
+
+    font-size: 25px;
+    color: rgba(226, 123, 157, 0.28);
+}
+
+section::after {
+    content: "🎀";
+
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+
+    font-size: 22px;
+    opacity: 0.55;
+}
+
+p {
+    font-weight: 400;
+}
+
+
+/* HERO */
 
 .hero {
     min-height: 100vh;
@@ -37,22 +78,47 @@ section {
 
     text-align: center;
 
-    padding: 40px 25px;
+    padding: 35px 24px;
 
     background:
-        radial-gradient(circle at 20% 20%, #ffd9e6 0, transparent 30%),
-        radial-gradient(circle at 80% 80%, #f9c6da 0, transparent 30%),
-        linear-gradient(180deg, #fff7fa, #ffe8f0);
+        radial-gradient(
+            circle at 20% 20%,
+            #ffd3e3 0%,
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            #ffc5da 0%,
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #fffafd,
+            #ffe8f0
+        );
 }
 
-.floating-heart {
-    font-size: 70px;
+.hero::before {
+    content: "🎀";
 
-    color: #e98aaa;
+    position: absolute;
+    top: 45px;
 
-    animation: floatHeart 3s ease-in-out infinite;
+    font-size: 65px;
 
-    margin-bottom: 25px;
+    animation: bowFloat 3s ease-in-out infinite;
+}
+
+.hero::after {
+    content: "♡  ˚₊‧  ♡  ˚₊‧  ♡";
+
+    position: absolute;
+    bottom: 50px;
+
+    color: #e8a0b7;
+
+    letter-spacing: 7px;
+    font-size: 14px;
 }
 
 .small-title,
@@ -61,183 +127,213 @@ section {
 
     letter-spacing: 3px;
 
-    font-size: 11px;
+    font-size: 10px;
 
-    color: #c77b96;
+    color: var(--dark-pink);
 
     font-weight: 600;
 }
 
 .hero h1 {
-    font-size: clamp(42px, 12vw, 70px);
+    font-size: clamp(46px, 13vw, 78px);
 
-    line-height: 1.05;
+    line-height: 1;
 
-    margin: 15px 0;
+    margin: 28px 0 15px;
 
-    font-weight: 700;
+    color: #573542;
 }
 
 .hero h1 span {
     display: block;
 
-    color: #e4779d;
+    color: var(--pink);
+
+    margin-top: 10px;
 }
 
 .subtitle {
-    max-width: 330px;
+    max-width: 320px;
 
-    line-height: 1.7;
+    line-height: 1.8;
+    font-size: 14px;
 
-    color: #80616d;
-
-    font-size: 15px;
+    color: #8f6272;
 
     margin-bottom: 30px;
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/* BUTTON */
 
 button {
-    border: none;
-
     font-family: inherit;
-
+    border: none;
     cursor: pointer;
 }
 
-.hero button,
-.answer-buttons button {
-    padding: 15px 25px;
+.hero button {
+    padding: 15px 28px;
 
-    border-radius: 30px;
-
-    background: #e77f9f;
+    border-radius: 50px;
 
     color: white;
 
-    font-size: 14px;
+    background:
+        linear-gradient(
+            135deg,
+            #e889aa,
+            #d96f96
+        );
 
+    font-size: 14px;
     font-weight: 600;
 
-    box-shadow: 0 10px 25px rgba(210, 105, 140, 0.25);
+    box-shadow:
+        0 12px 25px
+        rgba(205, 91, 128, 0.25);
 
     transition: 0.25s ease;
 }
 
-.hero button:active,
-.answer-buttons button:active {
-    transform: scale(0.95);
+.hero button:active {
+    transform: scale(0.94);
 }
 
 
-/* =========================
-   NORMAL SECTIONS
-========================= */
+/* STORY */
 
 .section,
 .letter-section,
 .final-letter {
-    padding: 90px 24px;
-
-    max-width: 700px;
+    max-width: 720px;
 
     margin: auto;
+
+    padding: 90px 24px;
+
+    background: #fff8fb;
+}
+
+.section:nth-of-type(even) {
+    background: #fff0f5;
 }
 
 .section h2,
 .letter-section h2,
-.final-letter h2,
-.date-section h2,
-.distance-section h2,
-.birthday-section h2 {
-    font-size: 34px;
+.final-letter h2 {
+    font-size: 35px;
 
     line-height: 1.15;
 
-    margin: 15px 0 30px;
+    margin: 14px 0 30px;
 
-    color: #4b303a;
+    color: #583744;
+}
+
+.section h2::after,
+.letter-section h2::after,
+.final-letter h2::after {
+    content: " ♡";
+
+    color: var(--pink);
+
+    font-size: 25px;
 }
 
 
-/* =========================
-   STORY IMAGE
-========================= */
+/* IMAGES */
 
 .story-image {
     width: 100%;
 
     display: block;
 
-    border-radius: 25px;
+    border-radius: 8px;
 
-    margin: 25px 0 35px;
+    padding: 9px;
+
+    background: white;
+
+    border: 1px solid #f3c4d4;
 
     box-shadow:
-        0 20px 50px rgba(177, 83, 116, 0.18);
+        0 15px 35px
+        rgba(190, 87, 121, 0.15);
 
-    object-fit: cover;
+    margin: 25px 0 38px;
+
+    transform: rotate(-1deg);
+
+    transition: 0.3s ease;
+}
+
+.story-image:hover {
+    transform: rotate(0deg) scale(1.01);
 }
 
 
-/* =========================
-   STORY TEXT
-========================= */
+/* TEXT */
 
 .story-text {
     font-size: 16px;
 
     line-height: 1.9;
 
-    color: #654a55;
+    color: var(--text);
 }
 
 .story-text p {
-    margin-bottom: 22px;
+    margin-bottom: 24px;
+}
+
+.story-text p:last-child {
+    margin-bottom: 0;
 }
 
 
-/* =========================
-   MUSIC SECTION
-========================= */
+/* MUSIC */
 
 .music-section {
-    padding: 90px 24px;
-
-    background: #ffe1eb;
+    padding: 90px 22px;
 
     text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffdce8,
+            #ffeaf1
+        );
 }
 
 .music-section h2 {
     font-size: 40px;
 
-    margin: 15px 0 8px;
+    margin: 12px 0 5px;
 
-    color: #4c303a;
+    color: #583744;
 }
 
 .music-dedication {
-    color: #956575;
+    font-size: 13px;
 
-    font-size: 14px;
+    color: #a46a7e;
 
-    margin-bottom: 30px;
+    margin-bottom: 28px;
 }
 
-
-/* MUSIC CARD */
+.music-section .chapter::before {
+    content: "🎀 ";
+}
 
 .music-card {
-    max-width: 420px;
+    width: 100%;
+    max-width: 430px;
 
     margin: auto;
 
-    padding: 18px;
+    padding: 16px;
 
     display: flex;
 
@@ -247,40 +343,39 @@ button {
 
     text-align: left;
 
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255,255,255,0.82);
 
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid #f1bfd1;
 
-    border-radius: 22px;
+    border-radius: 18px;
 
     box-shadow:
-        0 15px 35px rgba(183, 91, 122, 0.12);
-
-    backdrop-filter: blur(10px);
+        0 15px 35px
+        rgba(186, 78, 117, 0.12);
 }
 
 .play-button {
     width: 55px;
-
     height: 55px;
-
-    flex-shrink: 0;
 
     border-radius: 50%;
 
-    background: #df7196;
+    flex-shrink: 0;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ee9db7,
+            #d96e96
+        );
 
     color: white;
 
     font-size: 18px;
 
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    box-shadow: 0 8px 20px rgba(209, 101, 135, 0.25);
+    box-shadow:
+        0 7px 18px
+        rgba(208, 91, 128, 0.25);
 }
 
 .music-info {
@@ -292,19 +387,14 @@ button {
 }
 
 .music-info strong {
+    color: #583744;
     font-size: 16px;
-
-    color: #4b303a;
 }
 
 .music-info span {
+    color: #a16b7d;
     font-size: 12px;
-
-    color: #9a6b7b;
 }
-
-
-/* HIDDEN VIDEO */
 
 .hidden-video {
     position: absolute;
@@ -321,17 +411,32 @@ button {
 /* DEDICATION */
 
 .dedication {
-    max-width: 600px;
+    max-width: 620px;
 
-    margin: 35px auto 0;
-
-    text-align: left;
+    margin: 32px auto 0;
 
     padding: 25px;
 
-    background: rgba(255, 255, 255, 0.55);
+    text-align: left;
 
-    border-radius: 22px;
+    background: rgba(255,255,255,0.6);
+
+    border: 1px solid #f3c5d5;
+
+    border-radius: 18px;
+
+    position: relative;
+}
+
+.dedication::before {
+    content: "🎀";
+
+    position: absolute;
+
+    top: -15px;
+    left: 20px;
+
+    font-size: 25px;
 }
 
 .dedication p {
@@ -339,26 +444,28 @@ button {
 
     line-height: 1.9;
 
-    color: #684b57;
+    color: #704c5a;
 
     margin-bottom: 18px;
 }
 
-.dedication p:last-child {
-    margin-bottom: 0;
-}
 
-
-/* =========================
-   DATE
-========================= */
+/* DATE */
 
 .date-section {
     padding: 90px 24px;
 
     text-align: center;
 
-    background: #fff8fa;
+    background: #fff7fa;
+}
+
+.date-section h2 {
+    font-size: 36px;
+
+    color: #583744;
+
+    margin: 15px 0 30px;
 }
 
 .date-card {
@@ -366,37 +473,36 @@ button {
 
     justify-content: center;
 
-    gap: 12px;
+    gap: 10px;
 
     margin: 35px 0;
 }
 
 .date-card span {
-    width: 75px;
-
-    height: 75px;
+    width: 70px;
+    height: 70px;
 
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
-    border-radius: 20px;
+    border-radius: 50%;
 
-    background: #f5b1c7;
+    background: #f0a4bc;
 
     color: white;
 
-    font-size: 22px;
-
+    font-size: 19px;
     font-weight: 700;
 
-    box-shadow: 0 10px 25px rgba(205, 106, 140, 0.2);
+    box-shadow:
+        0 8px 20px
+        rgba(205, 91, 128, 0.18);
 }
 
 .date-section .story-text {
-    max-width: 600px;
+    max-width: 620px;
 
     margin: auto;
 
@@ -404,20 +510,26 @@ button {
 }
 
 
-/* =========================
-   DISTANCE
-========================= */
+/* DISTANCE */
 
 .distance-section {
-    padding: 100px 24px;
-
-    background: #f8dce5;
+    padding: 95px 24px;
 
     text-align: center;
+
+    background: #ffe5ee;
+}
+
+.distance-section h2 {
+    font-size: 38px;
+
+    color: #583744;
+
+    margin: 15px 0 30px;
 }
 
 .distance-section .story-text {
-    max-width: 600px;
+    max-width: 620px;
 
     margin: auto;
 
@@ -425,25 +537,32 @@ button {
 }
 
 
-/* =========================
-   BIRTHDAY
-========================= */
+/* BIRTHDAY */
 
 .birthday-section {
     padding: 100px 24px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #ffeef4,
-            #ffd5e2
-        );
-
     text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 30% 20%,
+            #ffd0df,
+            transparent 30%
+        ),
+        #fff0f5;
+}
+
+.birthday-section h2 {
+    font-size: 38px;
+
+    margin: 15px 0 30px;
+
+    color: #583744;
 }
 
 .birthday-section .story-text {
-    max-width: 600px;
+    max-width: 620px;
 
     margin: auto;
 
@@ -451,41 +570,56 @@ button {
 }
 
 
-/* =========================
-   GIFT
-========================= */
+/* GIFT */
 
 .gift-section {
-    padding: 90px 24px;
-
-    max-width: 700px;
+    max-width: 720px;
 
     margin: auto;
 
+    padding: 90px 24px;
+
     text-align: center;
+
+    background: #fff8fb;
 }
 
 .gift-image {
     width: 100%;
 
-    max-width: 550px;
+    display: block;
 
-    border-radius: 25px;
+    padding: 9px;
+
+    background: white;
+
+    border: 1px solid #f0b9cc;
+
+    border-radius: 8px;
 
     box-shadow:
-        0 20px 50px rgba(175, 77, 112, 0.2);
+        0 20px 45px
+        rgba(181, 76, 112, 0.18);
+
+    transform: rotate(1deg);
+
+    transition: 0.3s ease;
+}
+
+.gift-image:hover {
+    transform: rotate(0deg);
 }
 
 .photo-caption {
-    margin: 18px 0 35px;
-
-    font-size: 12px;
+    margin: 25px 0 38px;
 
     text-transform: uppercase;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 
-    color: #c27994;
+    font-size: 11px;
+
+    color: #bd718b;
 }
 
 .gift-section .story-text {
@@ -493,23 +627,19 @@ button {
 }
 
 
-/* =========================
-   FINAL MUSIC
-========================= */
+/* FINAL MUSIC */
 
 .final-music {
     background:
         linear-gradient(
-            145deg,
-            #ffd7e5,
-            #f7b7ce
+            180deg,
+            #ffd4e3,
+            #f7b6cd
         );
 }
 
 
-/* =========================
-   FINAL QUESTION
-========================= */
+/* QUESTION */
 
 .question-section {
     min-height: 100vh;
@@ -522,40 +652,56 @@ button {
 
     justify-content: center;
 
+    align-items: center;
+
     text-align: center;
 
     background:
         radial-gradient(
-            circle at center,
-            #ffe5ee,
-            #ffcbdc
+            circle at 50% 40%,
+            #ffd8e6,
+            #fff1f6
         );
 }
 
 .question-section h2 {
-    font-size: 42px;
+    font-size: 44px;
 
     margin: 15px 0 30px;
+
+    color: #583744;
 }
 
 .question-section .story-text {
-    max-width: 600px;
-
-    margin: auto;
+    max-width: 620px;
 
     text-align: left;
 }
 
 .final-question {
-    font-size: clamp(30px, 8vw, 50px);
-
-    line-height: 1.15;
+    max-width: 650px;
 
     margin: 50px auto 35px;
 
-    max-width: 650px;
+    font-size: clamp(
+        30px,
+        8vw,
+        52px
+    );
 
-    color: #d9648b;
+    line-height: 1.15;
+
+    color: #d56489;
+}
+
+.final-question::before {
+    content: "🎀";
+
+    display: block;
+
+    font-size: 35px;
+
+    margin-bottom: 20px;
 }
 
 .answer-buttons {
@@ -563,44 +709,65 @@ button {
 
     justify-content: center;
 
-    align-items: center;
-
     gap: 12px;
 
     flex-wrap: wrap;
 }
 
+.answer-buttons button {
+    padding: 14px 25px;
+
+    border-radius: 50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e98aaa,
+            #d96e95
+        );
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 10px 25px
+        rgba(205, 91, 128, 0.2);
+}
+
 .answer-buttons button:last-child {
     background: white;
 
-    color: #d4688c;
+    color: #c96688;
 
-    border: 1px solid #efb1c6;
+    border: 1px solid #e7a7bb;
 
     box-shadow: none;
 }
 
 #answer {
-    min-height: 70px;
+    min-height: 80px;
+
+    max-width: 400px;
 
     margin-top: 30px;
 
-    color: #9d5f76;
+    color: #925c70;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
 
-/* =========================
-   ENDING
-========================= */
+/* ENDING */
 
 .ending {
     min-height: 70vh;
 
-    padding: 100px 25px;
+    padding: 100px 24px;
 
     display: flex;
 
@@ -612,94 +779,118 @@ button {
 
     text-align: center;
 
-    background: #fff3f7;
+    background:
+        linear-gradient(
+            180deg,
+            #fff0f5,
+            #ffd8e6
+        );
 }
 
 .ending h2 {
-    font-size: 35px;
+    font-size: 36px;
 
-    color: #d86d92;
+    color: #d6698d;
 
     margin-bottom: 20px;
 }
 
+.ending h2::before {
+    content: "🎀";
+
+    display: block;
+
+    font-size: 40px;
+
+    margin-bottom: 15px;
+}
+
 .ending p {
-    color: #765562;
+    max-width: 350px;
+
+    color: #765362;
 
     line-height: 1.8;
 
-    max-width: 350px;
+    margin-bottom: 15px;
 }
 
 .signature {
-    margin-top: 35px;
+    color: #c56687 !important;
 
     font-size: 14px;
-
-    color: #c06b89 !important;
 }
 
 
-/* =========================
-   HEART ANIMATION
-========================= */
+/* FLOATING HEARTS */
 
 .heart {
     position: fixed;
 
     bottom: -30px;
 
-    font-size: 25px;
-
-    color: #e77f9f;
+    z-index: 9999;
 
     pointer-events: none;
 
-    z-index: 9999;
+    color: #e98aaa;
 
-    animation: heartFloat 4s linear forwards;
+    font-size: 22px;
+
+    animation:
+        heartFloat 5s linear forwards;
 }
 
 @keyframes heartFloat {
 
     0% {
-        transform: translateY(0) rotate(0deg);
+        transform:
+            translateY(0)
+            rotate(0deg);
 
+        opacity: 0;
+    }
+
+    15% {
         opacity: 1;
     }
 
     100% {
-        transform: translateY(-110vh) rotate(25deg);
+        transform:
+            translateY(-110vh)
+            rotate(25deg);
 
         opacity: 0;
     }
 }
 
-@keyframes floatHeart {
+@keyframes bowFloat {
 
     0%,
     100% {
-        transform: translateY(0);
+        transform:
+            translateY(0)
+            rotate(-3deg);
     }
 
     50% {
-        transform: translateY(-12px);
+        transform:
+            translateY(-10px)
+            rotate(3deg);
     }
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media (max-width: 480px) {
 
-    .hero {
-        padding: 30px 22px;
+    .hero h1 {
+        font-size: 44px;
     }
 
-    .hero h1 {
-        font-size: 43px;
+    .hero::before {
+        font-size: 55px;
     }
 
     .section,
@@ -710,16 +901,13 @@ button {
 
     .section h2,
     .letter-section h2,
-    .final-letter h2,
-    .date-section h2,
-    .distance-section h2,
-    .birthday-section h2 {
+    .final-letter h2 {
         font-size: 31px;
     }
 
     .story-text {
         font-size: 15px;
-        line-height: 1.85;
+        line-height: 1.9;
     }
 
     .music-section {
@@ -727,16 +915,24 @@ button {
     }
 
     .music-section h2 {
-        font-size: 36px;
+        font-size: 35px;
     }
 
     .dedication {
-        padding: 20px;
+        padding: 21px;
     }
 
     .date-card span {
-        width: 65px;
-        height: 65px;
+        width: 62px;
+        height: 62px;
+    }
+
+    .question-section {
+        padding: 80px 22px;
+    }
+
+    .question-section h2 {
+        font-size: 40px;
     }
 
     .answer-buttons {
