@@ -3,10 +3,8 @@
 ========================= */
 
 /*
-   YOUR SECRET CODE
-
-   Change this if you want.
-   Current code: 071223
+   CHANGE THIS TO WHATEVER
+   6-DIGIT CODE YOU WANT.
 */
 
 const SECRET_CODE = "071223";
@@ -19,96 +17,41 @@ function unlock() {
     const lockScreen = document.getElementById("lock-screen");
     const mainContent = document.getElementById("main-content");
 
-    if (!input || !lockScreen || !mainContent) {
-        return;
-    }
-
-    const code = input.value.trim();
-
-
-    /* =========================
-       CORRECT CODE
-    ========================= */
+    const code = input.value;
 
     if (code === SECRET_CODE) {
 
         error.textContent = "";
 
-        /*
-           Prevent the website itself
-           from scrolling.
-        */
-
-        document.body.style.overflow = "hidden";
-
-
-        /*
-           Fade out lock screen.
-        */
-
-        lockScreen.style.transition = "opacity 0.5s ease";
         lockScreen.style.opacity = "0";
-
 
         setTimeout(() => {
 
             lockScreen.style.display = "none";
-
             mainContent.classList.remove("hidden");
 
             showPage(0);
 
         }, 500);
 
-    }
-
-
-    /* =========================
-       WRONG CODE
-    ========================= */
-
-    else {
+    } else {
 
         error.textContent = "wrong code, try again ♡";
 
         input.value = "";
 
-        input.focus();
-
-
-        /*
-           iPhone-like shake
-        */
-
         input.animate(
             [
-                {
-                    transform: "translateX(0)"
-                },
-                {
-                    transform: "translateX(-7px)"
-                },
-                {
-                    transform: "translateX(7px)"
-                },
-                {
-                    transform: "translateX(-5px)"
-                },
-                {
-                    transform: "translateX(5px)"
-                },
-                {
-                    transform: "translateX(0)"
-                }
+                { transform: "translateX(0)" },
+                { transform: "translateX(-7px)" },
+                { transform: "translateX(7px)" },
+                { transform: "translateX(0)" }
             ],
             {
-                duration: 300,
-                easing: "ease-in-out"
+                duration: 250
             }
         );
-
     }
-
 }
 
 
@@ -121,73 +64,25 @@ const pages = document.querySelectorAll(".page");
 let currentPage = 0;
 
 
-/*
-   Show exactly ONE page.
-
-   IMPORTANT:
-   There is NO scrollTo() here.
-
-   The page simply changes.
-*/
-
 function showPage(index) {
 
     if (index < 0 || index >= pages.length) {
         return;
     }
 
-
-    pages.forEach((page, i) => {
-
+    pages.forEach((page) => {
         page.classList.remove("active");
-
-        page.setAttribute("aria-hidden", "true");
-
     });
 
-
-    const selectedPage = pages[index];
-
-    selectedPage.classList.add("active");
-
-    selectedPage.setAttribute("aria-hidden", "false");
-
+    pages[index].classList.add("active");
 
     currentPage = index;
 
-
-    /*
-       Always put the page itself
-       at the top without scrolling
-       the whole website.
-    */
-
-    selectedPage.scrollTop = 0;
-
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
-
-
-/* =========================
-   INITIAL PAGE
-========================= */
-
-pages.forEach((page, index) => {
-
-    if (index === 0) {
-
-        page.classList.add("active");
-
-        page.setAttribute("aria-hidden", "false");
-
-    } else {
-
-        page.classList.remove("active");
-
-        page.setAttribute("aria-hidden", "true");
-
-    }
-
-});
 
 
 /* =========================
@@ -196,43 +91,7 @@ pages.forEach((page, index) => {
 
 document.querySelectorAll(".next-button").forEach((button) => {
 
-    button.addEventListener("click", function (event) {
-
-        event.preventDefault();
-
-        /*
-           Stop any weird browser scrolling
-           when button is pressed.
-        */
-
-        event.stopPropagation();
-
-
-        /*
-           Stop currently playing music
-           when moving to another page.
-        */
-
-        if (currentAudio) {
-
-            currentAudio.pause();
-
-            currentAudio.currentTime = 0;
-
-            if (currentButton) {
-                currentButton.textContent = "▶";
-            }
-
-            currentAudio = null;
-            currentButton = null;
-
-        }
-
-
-        /*
-           Go to next PAGE,
-           not next scroll position.
-        */
+    button.addEventListener("click", () => {
 
         if (currentPage < pages.length - 1) {
 
@@ -266,18 +125,9 @@ function toggleMusic(id, button) {
     }
 
 
-    /*
-       If another song is playing,
-       stop it first.
-    */
-
-    if (
-        currentAudio &&
-        currentAudio !== audio
-    ) {
+    if (currentAudio && currentAudio !== audio) {
 
         currentAudio.pause();
-
         currentAudio.currentTime = 0;
 
         if (currentButton) {
@@ -287,62 +137,40 @@ function toggleMusic(id, button) {
     }
 
 
-    /* =========================
-       PLAY
-    ========================= */
-
     if (audio.paused) {
 
-        audio.play()
-            .then(() => {
+        audio.play().then(() => {
 
-                button.textContent = "❚❚";
+            button.textContent = "❚❚";
 
-                currentAudio = audio;
+            currentAudio = audio;
+            currentButton = button;
 
-                currentButton = button;
+        }).catch(() => {
 
-            })
-            .catch(() => {
+            button.textContent = "▶";
 
-                button.textContent = "▶";
+        });
 
-            });
-
-    }
-
-
-    /* =========================
-       PAUSE
-    ========================= */
-
-    else {
+    } else {
 
         audio.pause();
 
         button.textContent = "▶";
 
         currentAudio = null;
-
         currentButton = null;
 
     }
 
 
-    /*
-       Reset button when song ends.
-    */
-
-    audio.onended = function () {
+    audio.onended = () => {
 
         button.textContent = "▶";
 
         if (currentAudio === audio) {
-
             currentAudio = null;
-
             currentButton = null;
-
         }
 
     };
@@ -358,27 +186,14 @@ function sayYes() {
 
     const answer = document.getElementById("answer");
 
-    if (!answer) {
-        return;
-    }
-
-
     answer.innerHTML = `
         thank you, juli. ♡
         <br>
         i'll do my best to make this time different.
     `;
 
-
-    /*
-       Give her a moment to see
-       the message before ending.
-    */
-
     setTimeout(() => {
-
         showEnding();
-
     }, 2200);
 
 }
@@ -391,11 +206,6 @@ function sayYes() {
 function thinkAboutIt() {
 
     const answer = document.getElementById("answer");
-
-    if (!answer) {
-        return;
-    }
-
 
     answer.innerHTML = `
         take all the time you need. 🎀
@@ -412,59 +222,17 @@ function thinkAboutIt() {
 
 function showEnding() {
 
-    /*
-       Stop music.
-    */
-
-    if (currentAudio) {
-
-        currentAudio.pause();
-
-        currentAudio.currentTime = 0;
-
-        if (currentButton) {
-            currentButton.textContent = "▶";
-        }
-
-        currentAudio = null;
-
-        currentButton = null;
-
-    }
-
-
-    /*
-       Hide every normal page.
-    */
-
-    pages.forEach((page) => {
-
+    document.querySelectorAll(".page").forEach((page) => {
         page.classList.remove("active");
-
-        page.setAttribute("aria-hidden", "true");
-
     });
-
-
-    /*
-       Show ending.
-    */
 
     const ending = document.getElementById("ending");
 
-    if (!ending) {
-        return;
-    }
-
     ending.classList.remove("hidden");
 
-
-    /*
-       NO scrollIntoView().
-       Ending simply replaces the page.
-    */
-
-    ending.scrollTop = 0;
+    ending.scrollIntoView({
+        behavior: "smooth"
+    });
 
 }
 
@@ -473,104 +241,15 @@ function showEnding() {
    ENTER KEY
 ========================= */
 
-document.addEventListener("keydown", function (event) {
-
-    const input = document.getElementById("secret-code");
-
+document.addEventListener("keydown", (event) => {
 
     if (
         event.key === "Enter" &&
-        document.activeElement === input
+        document.activeElement === document.getElementById("secret-code")
     ) {
-
-        event.preventDefault();
 
         unlock();
 
     }
 
-});
-
-
-/* =========================
-   PREVENT PAGE SCROLLING
-========================= */
-
-/*
-   This makes the experience behave
-   like separate screens instead of
-   one long webpage.
-*/
-
-document.addEventListener("wheel", function (event) {
-
-    /*
-       Only prevent scrolling when
-       the main story is open.
-    */
-
-    const mainContent = document.getElementById("main-content");
-
-    if (
-        mainContent &&
-        !mainContent.classList.contains("hidden")
-    ) {
-
-        event.preventDefault();
-
-    }
-
-}, {
-    passive: false
-});
-
-
-/*
-   Prevent touch swipe from changing
-   the story page accidentally.
-
-   The only way to continue is
-   pressing the button.
-*/
-
-let touchStartY = 0;
-
-
-document.addEventListener("touchstart", function (event) {
-
-    if (event.touches.length === 1) {
-
-        touchStartY = event.touches[0].clientY;
-
-    }
-
-}, {
-    passive: true
-});
-
-
-document.addEventListener("touchmove", function (event) {
-
-    const mainContent = document.getElementById("main-content");
-
-    if (
-        mainContent &&
-        !mainContent.classList.contains("hidden")
-    ) {
-
-        event.preventDefault();
-
-    }
-
-}, {
-    passive: false
-});
-
-
-document.addEventListener("touchend", function () {
-
-    touchStartY = 0;
-
-}, {
-    passive: true
 });
