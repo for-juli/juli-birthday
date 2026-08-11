@@ -1,9 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:ital,wght@400;500;600&display=swap');
-
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 html {
@@ -11,23 +7,14 @@ html {
 }
 
 body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    background:
-        radial-gradient(circle at 10% 10%, rgba(255, 105, 180, .16), transparent 30%),
-        radial-gradient(circle at 90% 80%, rgba(255, 182, 193, .22), transparent 32%),
-        #fff7fa;
-    color: #6c3f51;
-    font-family: "DM Sans", sans-serif;
-}
-
-button,
-input {
-    font-family: inherit;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff5f8;
+    color: #70485b;
 }
 
 button {
-    cursor: pointer;
+    font-family: inherit;
 }
 
 .hidden {
@@ -36,230 +23,262 @@ button {
 
 
 /* =========================
+   LOCK SCREEN
+========================= */
+
+#lock-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, #ffdce9, transparent 30%),
+        radial-gradient(circle at 80% 70%, #f7c4d8, transparent 35%),
+        #d8bfc7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.lock-card {
+    width: min(90%, 390px);
+    text-align: center;
+    padding: 35px 20px;
+    color: white;
+}
+
+.lock-bow {
+    font-size: 42px;
+    margin-bottom: 5px;
+}
+
+.lock-small {
+    font-size: 14px;
+    letter-spacing: 2px;
+    opacity: .9;
+}
+
+.lock-card h1 {
+    font-size: 32px;
+    margin: 10px 0;
+    font-weight: 400;
+}
+
+.lock-message {
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.passcode-dots {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 25px 0;
+}
+
+.passcode-dots span {
+    width: 13px;
+    height: 13px;
+    border: 2px solid white;
+    border-radius: 50%;
+    transition: .2s;
+}
+
+.passcode-dots span.filled {
+    background: white;
+}
+
+#passcode-display {
+    display: none;
+}
+
+.keypad {
+    width: 300px;
+    max-width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.keypad button {
+    width: 76px;
+    height: 76px;
+    margin: auto;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.8);
+    background: rgba(255,255,255,.18);
+    color: white;
+    font-size: 30px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+
+.keypad button:active {
+    transform: scale(.92);
+    background: rgba(255,255,255,.35);
+}
+
+.keypad small {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.delete-key {
+    margin-top: 20px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 14px;
+}
+
+#lock-error {
+    height: 20px;
+    margin: 8px 0;
+    color: #fff0f5;
+    font-size: 13px;
+}
+
+.lock-hint {
+    font-size: 12px;
+    opacity: .8;
+    margin-top: 20px;
+}
+
+.lock-bg-heart {
+    position: absolute;
+    font-size: 280px;
+    opacity: .13;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+}
+
+.lock-bg-flower {
+    position: absolute;
+    font-size: 100px;
+    right: 5%;
+    bottom: 8%;
+    opacity: .35;
+}
+
+
+/* =========================
    PAGES
 ========================= */
 
-.page {
-    display: none;
+#main-site {
     width: 100%;
+}
+
+.page {
     min-height: 100vh;
-    padding: 65px 22px 90px;
-    align-items: center;
-    justify-content: center;
+    padding: 75px 25px 90px;
+    display: none;
     flex-direction: column;
-    position: relative;
-    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(255,205,220,.45), transparent 25%),
+        radial-gradient(circle at 90% 90%, rgba(255,220,230,.5), transparent 25%),
+        #fff7fa;
 }
 
 .page.active {
     display: flex;
-    animation: pageIn .65s ease;
 }
 
-@keyframes pageIn {
-    from {
-        opacity: 0;
-        transform: translateY(18px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.page h1,
+.page h2 {
+    color: #9d5673;
+    font-weight: 400;
 }
 
-.page::before {
-    content: "🌷";
-    position: absolute;
-    top: 25px;
-    left: 15px;
-    font-size: 42px;
-    opacity: .28;
-    transform: rotate(-12deg);
+.page h1 {
+    font-size: clamp(38px, 10vw, 65px);
+    line-height: 1.15;
 }
 
-.page::after {
-    content: "🩷";
-    position: absolute;
-    right: 18px;
-    bottom: 25px;
-    font-size: 38px;
-    opacity: .25;
+.page h1 span {
+    display: block;
+    color: #d8759b;
+}
+
+.page h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(28px, 7vw, 45px);
+    margin: 12px 0 28px;
 }
 
 .chapter {
-    color: #d05f88;
-    font-size: 11px;
+    color: #c47b98;
+    font-size: 13px;
     letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
+    text-transform: lowercase;
 }
 
-h2 {
-    font-family: "Playfair Display", serif;
-    font-weight: 500;
-    color: #713f53;
-    font-size: clamp(31px, 8vw, 51px);
-    line-height: 1.15;
-    text-align: center;
-    margin-bottom: 25px;
+.subtitle {
+    max-width: 500px;
+    line-height: 1.8;
+    color: #8c6173;
 }
+
+.next-button,
+.answer-buttons button {
+    margin-top: 35px;
+    padding: 15px 28px;
+    border-radius: 30px;
+    border: 1.5px solid #e8a0bd;
+    background: rgba(255,255,255,.8);
+    color: #b85f82;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 8px 20px rgba(190,100,140,.08);
+}
+
+.next-button:hover,
+.answer-buttons button:hover {
+    transform: translateY(-3px);
+    background: #ffe8f0;
+}
+
+
+/* =========================
+   STORY
+========================= */
 
 .story-text {
-    width: min(680px, 100%);
-}
-
-.story-text p {
-    color: #754b5b;
-    font-size: 15px;
-    line-height: 1.9;
+    width: min(100%, 700px);
     text-align: center;
-    margin-bottom: 21px;
 }
 
-.next-button {
-    border: 1px solid #efa1bd;
-    background: rgba(255, 255, 255, .8);
-    color: #b74f76;
-    padding: 13px 28px;
-    border-radius: 999px;
-    margin-top: 15px;
-    box-shadow: 0 10px 25px rgba(202, 88, 126, .12);
-    transition: .25s ease;
+.story-text p,
+.dedication p {
+    font-size: 17px;
+    line-height: 2;
+    margin: 0 0 32px;
+    color: #704f5f;
 }
 
-.next-button:hover {
-    background: #ffd9e6;
-    transform: translateY(-2px);
-}
-
-
-/* =========================
-   LOCK
-========================= */
-
-#lock-screen {
-    min-height: 100vh;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 22px;
-    background:
-        radial-gradient(circle at 20% 20%, #ffd4e3, transparent 35%),
-        radial-gradient(circle at 85% 85%, #ffe8f0, transparent 35%),
-        #fff5f9;
-    transition: opacity .5s ease;
-}
-
-.lock-card {
-    width: min(390px, 100%);
-    padding: 43px 26px;
-    text-align: center;
-    border-radius: 32px;
-    background: rgba(255,255,255,.78);
-    border: 1px solid rgba(217, 101, 142, .2);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 25px 70px rgba(185, 72, 113, .17);
-}
-
-.lock-bow {
-    font-size: 44px;
-    margin-bottom: 8px;
-}
-
-.lock-small {
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #c66585;
-    text-transform: uppercase;
-}
-
-.lock-card h1 {
-    font-family: "Playfair Display", serif;
-    font-size: 43px;
-    color: #713f53;
-    font-weight: 500;
-    margin: 8px 0 15px;
-}
-
-.lock-message {
-    color: #825365;
-    font-size: 14px;
-    line-height: 1.7;
-}
-
-.lock-icon {
-    font-size: 34px;
-    margin: 22px 0 15px;
-}
-
-#secret-code {
-    width: 100%;
-    height: 53px;
-    border: 1px solid #e7a0b9;
-    background: #fffafd;
-    border-radius: 16px;
-    outline: none;
-    text-align: center;
-    letter-spacing: 7px;
-    font-size: 20px;
-    color: #984d6a;
-    margin-bottom: 13px;
-}
-
-#secret-code:focus {
-    border-color: #d36589;
-    box-shadow: 0 0 0 4px rgba(211,101,137,.1);
-}
-
-.lock-card button {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 999px;
-    color: white;
-    background: #d87599;
-    box-shadow: 0 9px 22px rgba(198, 79, 119, .2);
-}
-
-#lock-error {
-    min-height: 20px;
-    margin-top: 11px;
-    font-size: 12px;
-    color: #bc4d70;
-}
-
-.lock-hint {
-    color: #b27487;
-    font-size: 11px;
-    margin-top: 18px;
-}
-
-
-/* =========================
-   IMAGES
-========================= */
-
-.story-image,
-.gift-image {
-    width: min(430px, 94%);
-    max-height: 430px;
+.story-image {
+    width: min(85%, 420px);
+    max-height: 450px;
     object-fit: cover;
-    display: block;
-    margin: 5px auto 28px;
-    border-radius: 26px;
+    border-radius: 20px;
     border: 6px solid white;
-    box-shadow: 0 18px 45px rgba(168, 68, 105, .17);
+    box-shadow: 0 12px 35px rgba(160,80,110,.15);
+    margin-bottom: 35px;
 }
 
 .photo-caption {
-    color: #bc5b7c;
-    font-size: 12px;
-    margin-top: -13px;
-    margin-bottom: 27px;
+    color: #bd7190;
+    letter-spacing: 2px;
+    font-size: 13px;
 }
 
 
@@ -270,21 +289,19 @@ h2 {
 .date-card {
     display: flex;
     gap: 12px;
-    margin: 12px 0 32px;
+    margin: 25px 0 45px;
 }
 
 .date-card span {
-    width: 72px;
-    height: 78px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border-radius: 20px;
-    background: #ffd9e6;
-    color: #ad4f72;
-    font-family: "Playfair Display", serif;
-    font-size: 27px;
-    box-shadow: 0 10px 25px rgba(188, 73, 111, .12);
+    align-items: center;
+    background: #f8c7da;
+    color: white;
+    font-size: 20px;
 }
 
 
@@ -292,79 +309,95 @@ h2 {
    MUSIC
 ========================= */
 
-.music-page {
-    text-align: center;
-}
-
 .music-dedication {
-    color: #a95b74;
-    font-size: 13px;
-    margin-bottom: 18px;
+    color: #b76b88;
     font-style: italic;
+    margin-bottom: 30px;
 }
 
 .music-card {
-    width: min(500px, 100%);
-    padding: 20px;
-    border-radius: 25px;
+    width: min(100%, 450px);
     display: flex;
     align-items: center;
-    gap: 17px;
-    text-align: left;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 20px;
     background: rgba(255,255,255,.8);
-    border: 1px solid rgba(218, 110, 148, .2);
-    box-shadow: 0 15px 35px rgba(181, 73, 111, .1);
-    margin-bottom: 25px;
+    border: 1px solid #f0b7cc;
+    box-shadow: 0 10px 25px rgba(180,90,130,.1);
 }
 
 .play-button {
-    width: 54px;
-    height: 54px;
-    min-width: 54px;
-    border: none;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    background: #d9789b;
+    border: none;
+    background: #e88fb0;
     color: white;
+    cursor: pointer;
     font-size: 18px;
-    transition: .25s;
-}
-
-.play-button:hover {
-    transform: scale(1.08);
 }
 
 .music-info {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    text-align: left;
+    gap: 5px;
 }
 
 .music-info strong {
-    color: #723f54;
-    font-family: "Playfair Display", serif;
-    font-size: 21px;
+    color: #8f4f69;
 }
 
 .music-info span {
-    color: #a16678;
-    font-size: 12px;
+    color: #b97992;
+    font-size: 13px;
+}
+
+.hidden-video {
+    display: none;
 }
 
 .dedication {
-    width: min(650px, 100%);
-    margin-top: 8px;
+    width: min(100%, 700px);
+    margin-top: 35px;
 }
 
-.dedication p {
-    color: #754b5b;
-    font-size: 14px;
-    line-height: 1.9;
-    text-align: center;
-    margin-bottom: 20px;
+
+/* =========================
+   GIFT
+========================= */
+
+.gift-image {
+    width: min(85%, 400px);
+    border-radius: 20px;
+    border: 6px solid white;
+    box-shadow: 0 15px 40px rgba(180,80,120,.15);
+    margin-bottom: 15px;
 }
 
-audio {
-    display: none;
+
+/* =========================
+   COURTING PAGE
+========================= */
+
+.courting-page {
+    background:
+        radial-gradient(circle at 15% 15%, #ffdce8, transparent 25%),
+        radial-gradient(circle at 85% 85%, #ffd3e2, transparent 30%),
+        #fff5f8;
+}
+
+.courting-photo {
+    width: min(85%, 380px);
+    max-height: 430px;
+    object-fit: cover;
+    border-radius: 24px;
+    padding: 8px;
+    background: white;
+    border: 2px solid #efa9c2;
+    box-shadow: 0 15px 40px rgba(190,90,130,.18);
+    margin: 10px 0 15px;
 }
 
 
@@ -373,53 +406,29 @@ audio {
 ========================= */
 
 .final-question {
-    width: min(620px, 100%);
-    margin: 22px auto;
-    padding: 27px 18px;
-    border-radius: 26px;
-    background: #ffd8e5;
-    color: #8e3f5c;
-    text-align: center;
-    font-family: "Playfair Display", serif;
-    font-size: clamp(22px, 5vw, 31px);
-    box-shadow: 0 15px 40px rgba(183, 74, 111, .12);
+    width: min(100%, 600px);
+    margin-top: 35px;
+    padding: 30px 20px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.75);
+    border: 1px solid #efa8c2;
+    color: #a65375;
+    font-family: Georgia, serif;
+    font-size: 25px;
+    line-height: 1.5;
 }
 
 .answer-buttons {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 15px;
     flex-wrap: wrap;
 }
 
-.answer-buttons button {
-    border: none;
-    border-radius: 999px;
-    padding: 14px 27px;
-    font-size: 14px;
-    transition: .25s;
-}
-
-.answer-buttons button:first-child {
-    background: #d87599;
-    color: white;
-}
-
-.answer-buttons button:last-child {
-    background: white;
-    color: #a74f70;
-    border: 1px solid #e5a1b7;
-}
-
-.answer-buttons button:hover {
-    transform: translateY(-2px);
-}
-
 #answer {
-    text-align: center;
-    color: #a84d6e;
-    margin-top: 18px;
-    line-height: 1.7;
+    margin-top: 25px;
+    color: #b65e82;
+    line-height: 1.8;
 }
 
 
@@ -428,44 +437,28 @@ audio {
 ========================= */
 
 .ending {
-    min-height: 100vh;
-    padding: 40px 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     background:
-        radial-gradient(circle at center, #ffe0ea, #fff7fa 65%);
+        radial-gradient(circle at 50% 40%, #ffd9e7, transparent 40%),
+        #fff5f8;
 }
 
-.ending-heart {
+.ending-flower {
     font-size: 65px;
-    animation: heartbeat 1.5s infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.12);
-    }
+    margin-bottom: 20px;
 }
 
 .ending p {
-    max-width: 520px;
-    color: #754c5b;
-    line-height: 1.8;
-    margin-bottom: 15px;
+    max-width: 600px;
+    line-height: 2;
+    color: #765263;
 }
 
 .signature {
-    color: #b34f72 !important;
-    font-family: "Playfair Display", serif;
+    margin-top: 35px;
+    color: #b85e80 !important;
+    font-family: Georgia, serif;
     font-size: 20px;
-    margin-top: 12px;
+    font-style: italic;
 }
 
 
@@ -473,39 +466,29 @@ audio {
    MOBILE
 ========================= */
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 
     .page {
-        padding: 55px 19px 80px;
-    }
-
-    h2 {
-        font-size: 32px;
+        padding: 60px 22px 80px;
     }
 
     .story-text p,
     .dedication p {
-        font-size: 14px;
-        line-height: 1.85;
+        font-size: 16px;
+        line-height: 1.9;
     }
 
-    .story-image,
-    .gift-image {
-        width: 94%;
-        max-height: 360px;
+    .keypad {
+        width: 270px;
+        gap: 14px;
     }
 
-    .date-card span {
-        width: 64px;
+    .keypad button {
+        width: 70px;
         height: 70px;
-        font-size: 24px;
     }
 
-    .music-card {
-        padding: 17px;
-    }
-
-    .lock-card {
-        padding: 38px 22px;
+    .final-question {
+        font-size: 22px;
     }
 }
