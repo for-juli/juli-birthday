@@ -2,208 +2,153 @@
    PASSCODE
 ========================= */
 
-/*
-   CHANGE THIS IF YOU WANT
-   A DIFFERENT 6-DIGIT CODE.
-*/
-const SECRET_CODE = "071223";
+const CORRECT_CODE = "071223";
 
 let enteredCode = "";
 
-const lockScreen = document.getElementById("lock-screen");
-const mainSite = document.getElementById("main-site");
-const lockError = document.getElementById("lock-error");
 
+function unlock() {
 
-function pressKey(number) {
+    const input = document.getElementById("secret-code");
+    const error = document.getElementById("lock-error");
 
-    if (enteredCode.length >= 6) {
-        return;
-    }
+    enteredCode = input.value;
 
-    enteredCode += number;
+    if (enteredCode === CORRECT_CODE) {
 
-    updateDots();
-
-    if (enteredCode.length === 6) {
-        setTimeout(checkCode, 180);
-    }
-}
-
-
-function deleteKey() {
-
-    enteredCode = enteredCode.slice(0, -1);
-
-    updateDots();
-
-    lockError.textContent = "";
-}
-
-
-function updateDots() {
-
-    for (let i = 1; i <= 6; i++) {
-
-        const dot = document.getElementById("dot" + i);
-
-        if (i <= enteredCode.length) {
-            dot.classList.add("filled");
-        } else {
-            dot.classList.remove("filled");
-        }
-
-    }
-}
-
-
-function checkCode() {
-
-    if (enteredCode === SECRET_CODE) {
-
-        lockScreen.style.opacity = "0";
-        lockScreen.style.transition = "opacity .7s ease";
+        document.getElementById("lock-screen").style.opacity = "0";
 
         setTimeout(() => {
-
-            lockScreen.style.display = "none";
-
-            mainSite.classList.remove("hidden");
-
-            showPage(0);
-
-        }, 700);
+            document.getElementById("lock-screen").style.display = "none";
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }, 500);
 
     } else {
 
-        lockError.textContent = "wrong code ♡ try again";
+        error.textContent = "wrong code, try again ♡";
 
-        enteredCode = "";
+        input.value = "";
 
-        updateDots();
-
-        const card = document.querySelector(".lock-card");
-
-        card.classList.add("shake");
+        input.style.animation = "shake .35s";
 
         setTimeout(() => {
-            card.classList.remove("shake");
-        }, 450);
-
+            input.style.animation = "";
+        }, 400);
     }
 }
 
 
 /* =========================
-   PAGE NAVIGATION
+   OPEN STORY
 ========================= */
 
-const pages = document.querySelectorAll(".page");
+function openStory() {
 
-let currentPage = 0;
+    const story = document.getElementById("story");
 
-
-function showPage(index) {
-
-    if (index < 0) {
-        index = 0;
+    if (story) {
+        story.scrollIntoView({
+            behavior: "smooth"
+        });
     }
-
-    if (index >= pages.length) {
-        index = pages.length - 1;
-    }
-
-    pages.forEach((page, i) => {
-
-        page.classList.toggle("active", i === index);
-
-    });
-
-    currentPage = index;
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
 }
 
 
-/* EVERY NEXT BUTTON */
+/* =========================
+   NEXT PAGE
+========================= */
 
-document.querySelectorAll(".next-button").forEach(button => {
+function nextPage() {
 
-    button.addEventListener("click", () => {
+    const sections = Array.from(
+        document.querySelectorAll("body > section:not(#lock-screen)")
+    );
 
-        if (currentPage < pages.length - 1) {
-            showPage(currentPage + 1);
+    const currentPosition = window.scrollY + window.innerHeight / 2;
+
+    let currentIndex = 0;
+
+    sections.forEach((section, index) => {
+
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+
+        if (
+            currentPosition >= top &&
+            currentPosition <= bottom
+        ) {
+            currentIndex = index;
         }
 
     });
 
-});
+    const next = sections[currentIndex + 1];
+
+    if (next) {
+
+        next.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }
+
+}
 
 
 /* =========================
    MUSIC
 ========================= */
 
-let currentlyPlaying = null;
+let currentSong = null;
+let currentButton = null;
 
 
 function toggleMusic(id, button) {
 
-    const audio = document.getElementById(id);
+    const song = document.getElementById(id);
 
-    if (!audio) {
-        return;
-    }
+    if (!song) return;
 
 
-    if (currentlyPlaying && currentlyPlaying !== audio) {
+    if (currentSong && currentSong !== song) {
 
-        currentlyPlaying.pause();
-        currentlyPlaying.currentTime = 0;
+        currentSong.pause();
+        currentSong.currentTime = 0;
 
-        const oldButton =
-            document.querySelector(
-                `.play-button[data-playing="true"]`
-            );
-
-        if (oldButton) {
-            oldButton.textContent = "▶";
-            oldButton.dataset.playing = "false";
+        if (currentButton) {
+            currentButton.textContent = "▶";
         }
 
     }
 
 
-    if (audio.paused) {
+    if (song.paused) {
 
-        audio.play();
+        song.play();
 
         button.textContent = "❚❚";
-        button.dataset.playing = "true";
 
-        currentlyPlaying = audio;
+        currentSong = song;
+        currentButton = button;
 
     } else {
 
-        audio.pause();
+        song.pause();
 
         button.textContent = "▶";
-        button.dataset.playing = "false";
-
-        currentlyPlaying = null;
 
     }
 
 
-    audio.onended = () => {
+    song.onended = function () {
 
         button.textContent = "▶";
-        button.dataset.playing = "false";
 
-        currentlyPlaying = null;
+        currentSong = null;
+        currentButton = null;
 
     };
 
@@ -211,7 +156,7 @@ function toggleMusic(id, button) {
 
 
 /* =========================
-   ANSWER
+   FINAL QUESTION
 ========================= */
 
 function sayYes() {
@@ -220,19 +165,19 @@ function sayYes() {
 
     answer.innerHTML = `
         <p>
-            you have no idea how happy that makes me. 🌷
+            you really said yes? 😭💗
+        </p>
+
+        <p>
+            then i promise i'll do my best this time. 🌷
         </p>
 
         <p>
             thank you for giving me another chance.
-            this time, i'll do my best to do things properly.
         </p>
-
-        <button class="next-button" onclick="goToEnding()">
-            continue ♡
-        </button>
     `;
 
+    createHearts();
 }
 
 
@@ -242,25 +187,66 @@ function thinkAboutIt() {
 
     answer.innerHTML = `
         <p>
-            take all the time you need. 🌷
+            that's okay. take all the time you need. 🎀
         </p>
 
         <p>
-            you don't have to answer just because i asked.
-            whatever your answer is, i'll respect it.
+            no pressure. i just wanted you to know
+            how i truly feel.
         </p>
-
-        <button class="next-button" onclick="goToEnding()">
-            continue ♡
-        </button>
     `;
 
 }
 
 
-function goToEnding() {
+/* =========================
+   FLOATING HEARTS
+========================= */
 
-    showPage(pages.length - 1);
+function createHearts() {
+
+    for (let i = 0; i < 12; i++) {
+
+        const heart = document.createElement("div");
+
+        heart.innerHTML = "💗";
+
+        heart.style.position = "fixed";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.bottom = "-30px";
+        heart.style.fontSize =
+            (16 + Math.random() * 20) + "px";
+        heart.style.zIndex = "10000";
+        heart.style.pointerEvents = "none";
+
+        document.body.appendChild(heart);
+
+        const duration =
+            2500 + Math.random() * 2000;
+
+        heart.animate(
+            [
+                {
+                    transform: "translateY(0) rotate(0deg)",
+                    opacity: 1
+                },
+                {
+                    transform:
+                        `translateY(-110vh) rotate(${Math.random() * 180 - 90}deg)`,
+                    opacity: 0
+                }
+            ],
+            {
+                duration: duration,
+                easing: "ease-out"
+            }
+        );
+
+        setTimeout(() => {
+            heart.remove();
+        }, duration);
+
+    }
 
 }
 
@@ -269,34 +255,45 @@ function goToEnding() {
    SHAKE ANIMATION
 ========================= */
 
-const shakeStyle = document.createElement("style");
+const style = document.createElement("style");
 
-shakeStyle.textContent = `
-    .shake {
-        animation: shake .4s ease;
+style.innerHTML = `
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
     }
 
-    @keyframes shake {
-        0%, 100% {
-            transform: translateX(0);
-        }
-
-        20% {
-            transform: translateX(-10px);
-        }
-
-        40% {
-            transform: translateX(10px);
-        }
-
-        60% {
-            transform: translateX(-7px);
-        }
-
-        80% {
-            transform: translateX(7px);
-        }
+    25% {
+        transform: translateX(-8px);
     }
+
+    50% {
+        transform: translateX(8px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+}
 `;
 
-document.head.appendChild(shakeStyle);
+document.head.appendChild(style);
+
+
+/* =========================
+   PREVENT MUSIC OVERLAP
+========================= */
+
+document.addEventListener("visibilitychange", () => {
+
+    if (document.hidden && currentSong) {
+
+        currentSong.pause();
+
+        if (currentButton) {
+            currentButton.textContent = "▶";
+        }
+
+    }
+
+});
