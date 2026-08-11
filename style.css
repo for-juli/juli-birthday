@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:ital,wght@400;500;600&display=swap');
+
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
@@ -7,14 +11,38 @@ html {
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #fff5f8;
-    color: #70485b;
+    font-family: "DM Sans", sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(255, 190, 215, .35), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(255, 205, 225, .35), transparent 30%),
+        #fff7fa;
+    color: #754d61;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "🌷";
+    position: fixed;
+    top: 8%;
+    left: 5%;
+    font-size: 25px;
+    opacity: .35;
+    z-index: -1;
+}
+
+body::after {
+    content: "🌷";
+    position: fixed;
+    bottom: 8%;
+    right: 5%;
+    font-size: 28px;
+    opacity: .35;
+    z-index: -1;
 }
 
 button {
     font-family: inherit;
+    cursor: pointer;
 }
 
 .hidden {
@@ -31,254 +59,226 @@ button {
     inset: 0;
     z-index: 9999;
     min-height: 100vh;
-    background:
-        radial-gradient(circle at 20% 20%, #ffdce9, transparent 30%),
-        radial-gradient(circle at 80% 70%, #f7c4d8, transparent 35%),
-        #d8bfc7;
     display: flex;
-    align-items: center;
     justify-content: center;
-    overflow: hidden;
+    align-items: center;
+    padding: 25px;
+    background:
+        radial-gradient(circle at 50% 20%, #ffd9e8, transparent 40%),
+        linear-gradient(135deg, #f7b8d0, #f5d6e2, #e9a9c5);
 }
 
 .lock-card {
-    width: min(90%, 390px);
+    width: min(390px, 100%);
+    padding: 45px 28px;
     text-align: center;
-    padding: 35px 20px;
-    color: white;
+    border-radius: 35px;
+    background: rgba(255, 248, 251, .78);
+    border: 1px solid rgba(255,255,255,.9);
+    box-shadow:
+        0 25px 70px rgba(125, 70, 95, .20),
+        inset 0 0 30px rgba(255,255,255,.5);
+    backdrop-filter: blur(18px);
 }
 
 .lock-bow {
-    font-size: 42px;
-    margin-bottom: 5px;
+    font-size: 48px;
+    margin-bottom: 8px;
 }
 
 .lock-small {
-    font-size: 14px;
+    color: #b77896;
+    font-size: 13px;
     letter-spacing: 2px;
-    opacity: .9;
+    text-transform: lowercase;
 }
 
 .lock-card h1 {
-    font-size: 32px;
-    margin: 10px 0;
-    font-weight: 400;
+    margin: 12px 0;
+    font-family: "Playfair Display", serif;
+    font-size: 42px;
+    font-weight: 500;
+    color: #7b4c63;
 }
 
 .lock-message {
-    line-height: 1.7;
-    font-size: 15px;
-}
-
-.passcode-dots {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin: 25px 0;
-}
-
-.passcode-dots span {
-    width: 13px;
-    height: 13px;
-    border: 2px solid white;
-    border-radius: 50%;
-    transition: .2s;
-}
-
-.passcode-dots span.filled {
-    background: white;
-}
-
-#passcode-display {
-    display: none;
-}
-
-.keypad {
-    width: 300px;
-    max-width: 100%;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
-
-.keypad button {
-    width: 76px;
-    height: 76px;
-    margin: auto;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.8);
-    background: rgba(255,255,255,.18);
-    color: white;
-    font-size: 30px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    cursor: pointer;
-}
-
-.keypad button:active {
-    transform: scale(.92);
-    background: rgba(255,255,255,.35);
-}
-
-.keypad small {
-    display: block;
-    font-size: 9px;
-    letter-spacing: 2px;
-}
-
-.delete-key {
-    margin-top: 20px;
-    border: none;
-    background: transparent;
-    color: white;
+    line-height: 1.8;
     font-size: 14px;
+    color: #9a6c80;
+    margin-bottom: 20px;
+}
+
+.lock-icon {
+    font-size: 38px;
+    margin: 15px;
+}
+
+#secret-code {
+    width: 100%;
+    height: 54px;
+    border-radius: 18px;
+    border: 1.5px solid #e9a1bf;
+    background: rgba(255,255,255,.7);
+    text-align: center;
+    font-size: 24px;
+    letter-spacing: 10px;
+    color: #7b4c63;
+    outline: none;
+}
+
+#secret-code:focus {
+    box-shadow: 0 0 0 4px rgba(231, 143, 177, .18);
+}
+
+.lock-card button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 25px;
+    border: none;
+    background: #dc8fb0;
+    color: white;
+    font-size: 16px;
+    box-shadow: 0 8px 20px rgba(180, 92, 130, .2);
+}
+
+.lock-card button:active {
+    transform: scale(.98);
 }
 
 #lock-error {
-    height: 20px;
-    margin: 8px 0;
-    color: #fff0f5;
+    min-height: 20px;
+    margin-top: 12px;
+    color: #d56d91;
     font-size: 13px;
 }
 
 .lock-hint {
-    font-size: 12px;
-    opacity: .8;
-    margin-top: 20px;
-}
-
-.lock-bg-heart {
-    position: absolute;
-    font-size: 280px;
-    opacity: .13;
-    left: 50%;
-    top: 48%;
-    transform: translate(-50%, -50%);
-}
-
-.lock-bg-flower {
-    position: absolute;
-    font-size: 100px;
-    right: 5%;
-    bottom: 8%;
-    opacity: .35;
+    margin-top: 18px;
+    font-size: 11px;
+    color: #b9879c;
 }
 
 
 /* =========================
-   PAGES
+   GENERAL SECTIONS
 ========================= */
 
-#main-site {
-    width: 100%;
+section {
+    min-height: 100vh;
+    padding: 80px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.page {
-    min-height: 100vh;
-    padding: 75px 25px 90px;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.hero {
     text-align: center;
     background:
-        radial-gradient(circle at 10% 10%, rgba(255,205,220,.45), transparent 25%),
-        radial-gradient(circle at 90% 90%, rgba(255,220,230,.5), transparent 25%),
-        #fff7fa;
+        radial-gradient(circle at center, rgba(255, 210, 225, .5), transparent 60%);
 }
 
-.page.active {
-    display: flex;
-}
-
-.page h1,
-.page h2 {
-    color: #9d5673;
-    font-weight: 400;
-}
-
-.page h1 {
-    font-size: clamp(38px, 10vw, 65px);
-    line-height: 1.15;
-}
-
-.page h1 span {
-    display: block;
-    color: #d8759b;
-}
-
-.page h2 {
-    font-family: Georgia, serif;
-    font-size: clamp(28px, 7vw, 45px);
-    margin: 12px 0 28px;
-}
-
+.small-title,
 .chapter {
-    color: #c47b98;
-    font-size: 13px;
+    color: #c27698;
     letter-spacing: 3px;
     text-transform: lowercase;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    max-width: 650px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(48px, 10vw, 85px);
+    line-height: 1.05;
+    font-weight: 500;
+    color: #70485b;
+}
+
+.hero h1 span {
+    display: block;
+    color: #d986a9;
+    font-style: italic;
 }
 
 .subtitle {
-    max-width: 500px;
+    margin: 25px auto;
+    max-width: 430px;
     line-height: 1.8;
-    color: #8c6173;
+    color: #916578;
 }
 
-.next-button,
-.answer-buttons button {
-    margin-top: 35px;
+.hero button,
+.next-button {
+    border: 1px solid #e89bb9;
+    background: rgba(255,255,255,.7);
+    color: #b45f82;
     padding: 15px 28px;
     border-radius: 30px;
-    border: 1.5px solid #e8a0bd;
-    background: rgba(255,255,255,.8);
-    color: #b85f82;
     font-size: 15px;
-    cursor: pointer;
-    transition: .25s;
-    box-shadow: 0 8px 20px rgba(190,100,140,.08);
+    box-shadow: 0 10px 30px rgba(190, 102, 140, .10);
+    transition: .25s ease;
 }
 
-.next-button:hover,
-.answer-buttons button:hover {
-    transform: translateY(-3px);
-    background: #ffe8f0;
+.hero button:hover,
+.next-button:hover {
+    background: #e89bb9;
+    color: white;
+    transform: translateY(-2px);
 }
 
-
-/* =========================
-   STORY
-========================= */
-
-.story-text {
-    width: min(100%, 700px);
+.section,
+.music-section,
+.date-section,
+.distance-section,
+.birthday-section,
+.gift-section,
+.letter-section,
+.final-letter,
+.question-section,
+.ending {
+    max-width: 800px;
+    margin: auto;
     text-align: center;
+}
+
+h2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: clamp(34px, 7vw, 54px);
+    color: #70485b;
+    line-height: 1.2;
+    margin-bottom: 35px;
+}
+
+.story-text,
+.dedication {
+    max-width: 680px;
+    margin: auto;
 }
 
 .story-text p,
 .dedication p {
     font-size: 17px;
     line-height: 2;
-    margin: 0 0 32px;
-    color: #704f5f;
+    margin-bottom: 28px;
+    color: #765365;
 }
 
 .story-image {
-    width: min(85%, 420px);
-    max-height: 450px;
+    width: min(100%, 500px);
+    max-height: 520px;
     object-fit: cover;
-    border-radius: 20px;
-    border: 6px solid white;
-    box-shadow: 0 12px 35px rgba(160,80,110,.15);
-    margin-bottom: 35px;
+    border-radius: 28px;
+    margin-bottom: 40px;
+    border: 7px solid rgba(255,255,255,.7);
+    box-shadow: 0 20px 50px rgba(126, 69, 94, .15);
 }
 
-.photo-caption {
-    color: #bd7190;
-    letter-spacing: 2px;
-    font-size: 13px;
+.next-button {
+    margin-top: 25px;
 }
 
 
@@ -288,20 +288,22 @@ button {
 
 .date-card {
     display: flex;
-    gap: 12px;
-    margin: 25px 0 45px;
+    gap: 14px;
+    margin: 15px 0 45px;
 }
 
 .date-card span {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
+    width: 75px;
+    height: 75px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: #f8c7da;
+    justify-content: center;
+    border-radius: 22px;
+    background: #f3b3cc;
     color: white;
-    font-size: 20px;
+    font-family: "Playfair Display", serif;
+    font-size: 27px;
+    box-shadow: 0 10px 25px rgba(200, 100, 145, .15);
 }
 
 
@@ -309,32 +311,42 @@ button {
    MUSIC
 ========================= */
 
+.music-section {
+    background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(255, 210, 226, .25),
+        transparent
+    );
+}
+
 .music-dedication {
-    color: #b76b88;
-    font-style: italic;
+    margin-top: -15px;
     margin-bottom: 30px;
+    color: #a86d84;
 }
 
 .music-card {
-    width: min(100%, 450px);
+    width: min(600px, 100%);
     display: flex;
     align-items: center;
     gap: 18px;
     padding: 18px;
-    border-radius: 20px;
-    background: rgba(255,255,255,.8);
-    border: 1px solid #f0b7cc;
-    box-shadow: 0 10px 25px rgba(180,90,130,.1);
+    margin-bottom: 30px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.72);
+    border: 1px solid #f0b1c8;
+    box-shadow: 0 15px 40px rgba(157, 82, 115, .10);
 }
 
 .play-button {
     width: 55px;
     height: 55px;
-    border-radius: 50%;
+    flex-shrink: 0;
     border: none;
-    background: #e88fb0;
+    border-radius: 50%;
+    background: #dd91b1;
     color: white;
-    cursor: pointer;
     font-size: 18px;
 }
 
@@ -346,21 +358,17 @@ button {
 }
 
 .music-info strong {
-    color: #8f4f69;
+    color: #70485b;
+    font-size: 17px;
 }
 
 .music-info span {
-    color: #b97992;
+    color: #a47588;
     font-size: 13px;
 }
 
 .hidden-video {
     display: none;
-}
-
-.dedication {
-    width: min(100%, 700px);
-    margin-top: 35px;
 }
 
 
@@ -369,35 +377,43 @@ button {
 ========================= */
 
 .gift-image {
-    width: min(85%, 400px);
-    border-radius: 20px;
-    border: 6px solid white;
-    box-shadow: 0 15px 40px rgba(180,80,120,.15);
-    margin-bottom: 15px;
+    width: min(100%, 500px);
+    max-height: 550px;
+    object-fit: contain;
+    border-radius: 30px;
+    padding: 8px;
+    background: rgba(255,255,255,.7);
+    box-shadow: 0 20px 50px rgba(126, 69, 94, .12);
+}
+
+.photo-caption {
+    margin: 18px 0 40px;
+    color: #bf7092;
+    font-size: 13px;
+    letter-spacing: 2px;
 }
 
 
 /* =========================
-   COURTING PAGE
+   COURTING PHOTO
 ========================= */
 
-.courting-page {
-    background:
-        radial-gradient(circle at 15% 15%, #ffdce8, transparent 25%),
-        radial-gradient(circle at 85% 85%, #ffd3e2, transparent 30%),
-        #fff5f8;
+.courting-photo-wrapper {
+    width: min(100%, 420px);
+    padding: 10px;
+    margin: 0 auto 10px;
+    border-radius: 32px;
+    background: rgba(255,255,255,.75);
+    border: 1px solid #f1a8c3;
+    box-shadow: 0 20px 55px rgba(174, 77, 118, .16);
 }
 
 .courting-photo {
-    width: min(85%, 380px);
-    max-height: 430px;
-    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: auto;
     border-radius: 24px;
-    padding: 8px;
-    background: white;
-    border: 2px solid #efa9c2;
-    box-shadow: 0 15px 40px rgba(190,90,130,.18);
-    margin: 10px 0 15px;
+    object-fit: contain;
 }
 
 
@@ -406,28 +422,45 @@ button {
 ========================= */
 
 .final-question {
-    width: min(100%, 600px);
-    margin-top: 35px;
-    padding: 30px 20px;
-    border-radius: 25px;
-    background: rgba(255,255,255,.75);
-    border: 1px solid #efa8c2;
-    color: #a65375;
-    font-family: Georgia, serif;
-    font-size: 25px;
+    margin: 45px auto 30px;
+    max-width: 650px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(27px, 6vw, 42px);
+    font-style: italic;
+    color: #c45d87;
     line-height: 1.5;
 }
 
 .answer-buttons {
     display: flex;
     justify-content: center;
-    gap: 15px;
     flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.answer-buttons button {
+    min-width: 150px;
+    padding: 15px 25px;
+    border-radius: 30px;
+    border: 1px solid #e7a0bb;
+    background: rgba(255,255,255,.75);
+    color: #b55d80;
+    font-size: 15px;
+}
+
+.answer-buttons button:first-child {
+    background: #dc8cab;
+    color: white;
+}
+
+.answer-buttons button:hover {
+    transform: translateY(-2px);
 }
 
 #answer {
     margin-top: 25px;
-    color: #b65e82;
+    color: #b85f81;
     line-height: 1.8;
 }
 
@@ -437,28 +470,28 @@ button {
 ========================= */
 
 .ending {
+    text-align: center;
     background:
-        radial-gradient(circle at 50% 40%, #ffd9e7, transparent 40%),
-        #fff5f8;
+        radial-gradient(circle, rgba(255, 194, 216, .4), transparent 60%);
 }
 
-.ending-flower {
-    font-size: 65px;
-    margin-bottom: 20px;
+.ending h2 {
+    color: #c05f86;
 }
 
 .ending p {
-    max-width: 600px;
+    max-width: 550px;
     line-height: 2;
-    color: #765263;
+    margin: 0 auto 25px;
+    color: #765365;
 }
 
 .signature {
-    margin-top: 35px;
-    color: #b85e80 !important;
-    font-family: Georgia, serif;
-    font-size: 20px;
+    margin-top: 45px !important;
+    font-family: "Playfair Display", serif;
     font-style: italic;
+    color: #c05f86 !important;
+    font-size: 20px;
 }
 
 
@@ -466,10 +499,18 @@ button {
    MOBILE
 ========================= */
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 
-    .page {
-        padding: 60px 22px 80px;
+    section {
+        padding: 70px 20px;
+    }
+
+    .lock-card {
+        padding: 35px 22px;
+    }
+
+    .lock-card h1 {
+        font-size: 38px;
     }
 
     .story-text p,
@@ -478,17 +519,26 @@ button {
         line-height: 1.9;
     }
 
-    .keypad {
-        width: 270px;
-        gap: 14px;
-    }
-
-    .keypad button {
-        width: 70px;
-        height: 70px;
-    }
-
-    .final-question {
+    .date-card span {
+        width: 62px;
+        height: 62px;
         font-size: 22px;
+    }
+
+    .music-card {
+        padding: 14px;
+    }
+
+    .courting-photo-wrapper {
+        width: 92%;
+    }
+
+    .answer-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .answer-buttons button {
+        width: 220px;
     }
 }
