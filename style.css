@@ -1,1 +1,749 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+        "Helvetica Neue", Arial, sans-serif;
+
+    background: #fff5f8;
+    color: #3b2730;
+
+    overflow-x: hidden;
+}
+
+section {
+    position: relative;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 40px 25px;
+
+    background:
+        radial-gradient(circle at 20% 20%, #ffd9e6 0, transparent 30%),
+        radial-gradient(circle at 80% 80%, #f9c6da 0, transparent 30%),
+        linear-gradient(180deg, #fff7fa, #ffe8f0);
+}
+
+.floating-heart {
+    font-size: 70px;
+
+    color: #e98aaa;
+
+    animation: floatHeart 3s ease-in-out infinite;
+
+    margin-bottom: 25px;
+}
+
+.small-title,
+.chapter {
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    font-size: 11px;
+
+    color: #c77b96;
+
+    font-weight: 600;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 12vw, 70px);
+
+    line-height: 1.05;
+
+    margin: 15px 0;
+
+    font-weight: 700;
+}
+
+.hero h1 span {
+    display: block;
+
+    color: #e4779d;
+}
+
+.subtitle {
+    max-width: 330px;
+
+    line-height: 1.7;
+
+    color: #80616d;
+
+    font-size: 15px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+    border: none;
+
+    font-family: inherit;
+
+    cursor: pointer;
+}
+
+.hero button,
+.answer-buttons button {
+    padding: 15px 25px;
+
+    border-radius: 30px;
+
+    background: #e77f9f;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    box-shadow: 0 10px 25px rgba(210, 105, 140, 0.25);
+
+    transition: 0.25s ease;
+}
+
+.hero button:active,
+.answer-buttons button:active {
+    transform: scale(0.95);
+}
+
+
+/* =========================
+   NORMAL SECTIONS
+========================= */
+
+.section,
+.letter-section,
+.final-letter {
+    padding: 90px 24px;
+
+    max-width: 700px;
+
+    margin: auto;
+}
+
+.section h2,
+.letter-section h2,
+.final-letter h2,
+.date-section h2,
+.distance-section h2,
+.birthday-section h2 {
+    font-size: 34px;
+
+    line-height: 1.15;
+
+    margin: 15px 0 30px;
+
+    color: #4b303a;
+}
+
+
+/* =========================
+   STORY IMAGE
+========================= */
+
+.story-image {
+    width: 100%;
+
+    display: block;
+
+    border-radius: 25px;
+
+    margin: 25px 0 35px;
+
+    box-shadow:
+        0 20px 50px rgba(177, 83, 116, 0.18);
+
+    object-fit: cover;
+}
+
+
+/* =========================
+   STORY TEXT
+========================= */
+
+.story-text {
+    font-size: 16px;
+
+    line-height: 1.9;
+
+    color: #654a55;
+}
+
+.story-text p {
+    margin-bottom: 22px;
+}
+
+
+/* =========================
+   MUSIC SECTION
+========================= */
+
+.music-section {
+    padding: 90px 24px;
+
+    background: #ffe1eb;
+
+    text-align: center;
+}
+
+.music-section h2 {
+    font-size: 40px;
+
+    margin: 15px 0 8px;
+
+    color: #4c303a;
+}
+
+.music-dedication {
+    color: #956575;
+
+    font-size: 14px;
+
+    margin-bottom: 30px;
+}
+
+
+/* MUSIC CARD */
+
+.music-card {
+    max-width: 420px;
+
+    margin: auto;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    text-align: left;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 35px rgba(183, 91, 122, 0.12);
+
+    backdrop-filter: blur(10px);
+}
+
+.play-button {
+    width: 55px;
+
+    height: 55px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #df7196;
+
+    color: white;
+
+    font-size: 18px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    box-shadow: 0 8px 20px rgba(209, 101, 135, 0.25);
+}
+
+.music-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.music-info strong {
+    font-size: 16px;
+
+    color: #4b303a;
+}
+
+.music-info span {
+    font-size: 12px;
+
+    color: #9a6b7b;
+}
+
+
+/* HIDDEN VIDEO */
+
+.hidden-video {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* DEDICATION */
+
+.dedication {
+    max-width: 600px;
+
+    margin: 35px auto 0;
+
+    text-align: left;
+
+    padding: 25px;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    border-radius: 22px;
+}
+
+.dedication p {
+    font-size: 15px;
+
+    line-height: 1.9;
+
+    color: #684b57;
+
+    margin-bottom: 18px;
+}
+
+.dedication p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+.date-section {
+    padding: 90px 24px;
+
+    text-align: center;
+
+    background: #fff8fa;
+}
+
+.date-card {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin: 35px 0;
+}
+
+.date-card span {
+    width: 75px;
+
+    height: 75px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 20px;
+
+    background: #f5b1c7;
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    box-shadow: 0 10px 25px rgba(205, 106, 140, 0.2);
+}
+
+.date-section .story-text {
+    max-width: 600px;
+
+    margin: auto;
+
+    text-align: left;
+}
+
+
+/* =========================
+   DISTANCE
+========================= */
+
+.distance-section {
+    padding: 100px 24px;
+
+    background: #f8dce5;
+
+    text-align: center;
+}
+
+.distance-section .story-text {
+    max-width: 600px;
+
+    margin: auto;
+
+    text-align: left;
+}
+
+
+/* =========================
+   BIRTHDAY
+========================= */
+
+.birthday-section {
+    padding: 100px 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffeef4,
+            #ffd5e2
+        );
+
+    text-align: center;
+}
+
+.birthday-section .story-text {
+    max-width: 600px;
+
+    margin: auto;
+
+    text-align: left;
+}
+
+
+/* =========================
+   GIFT
+========================= */
+
+.gift-section {
+    padding: 90px 24px;
+
+    max-width: 700px;
+
+    margin: auto;
+
+    text-align: center;
+}
+
+.gift-image {
+    width: 100%;
+
+    max-width: 550px;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 50px rgba(175, 77, 112, 0.2);
+}
+
+.photo-caption {
+    margin: 18px 0 35px;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    color: #c27994;
+}
+
+.gift-section .story-text {
+    text-align: left;
+}
+
+
+/* =========================
+   FINAL MUSIC
+========================= */
+
+.final-music {
+    background:
+        linear-gradient(
+            145deg,
+            #ffd7e5,
+            #f7b7ce
+        );
+}
+
+
+/* =========================
+   FINAL QUESTION
+========================= */
+
+.question-section {
+    min-height: 100vh;
+
+    padding: 100px 24px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #ffe5ee,
+            #ffcbdc
+        );
+}
+
+.question-section h2 {
+    font-size: 42px;
+
+    margin: 15px 0 30px;
+}
+
+.question-section .story-text {
+    max-width: 600px;
+
+    margin: auto;
+
+    text-align: left;
+}
+
+.final-question {
+    font-size: clamp(30px, 8vw, 50px);
+
+    line-height: 1.15;
+
+    margin: 50px auto 35px;
+
+    max-width: 650px;
+
+    color: #d9648b;
+}
+
+.answer-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.answer-buttons button:last-child {
+    background: white;
+
+    color: #d4688c;
+
+    border: 1px solid #efb1c6;
+
+    box-shadow: none;
+}
+
+#answer {
+    min-height: 70px;
+
+    margin-top: 30px;
+
+    color: #9d5f76;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   ENDING
+========================= */
+
+.ending {
+    min-height: 70vh;
+
+    padding: 100px 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    background: #fff3f7;
+}
+
+.ending h2 {
+    font-size: 35px;
+
+    color: #d86d92;
+
+    margin-bottom: 20px;
+}
+
+.ending p {
+    color: #765562;
+
+    line-height: 1.8;
+
+    max-width: 350px;
+}
+
+.signature {
+    margin-top: 35px;
+
+    font-size: 14px;
+
+    color: #c06b89 !important;
+}
+
+
+/* =========================
+   HEART ANIMATION
+========================= */
+
+.heart {
+    position: fixed;
+
+    bottom: -30px;
+
+    font-size: 25px;
+
+    color: #e77f9f;
+
+    pointer-events: none;
+
+    z-index: 9999;
+
+    animation: heartFloat 4s linear forwards;
+}
+
+@keyframes heartFloat {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(25deg);
+
+        opacity: 0;
+    }
+}
+
+@keyframes floatHeart {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .hero {
+        padding: 30px 22px;
+    }
+
+    .hero h1 {
+        font-size: 43px;
+    }
+
+    .section,
+    .letter-section,
+    .final-letter {
+        padding: 75px 22px;
+    }
+
+    .section h2,
+    .letter-section h2,
+    .final-letter h2,
+    .date-section h2,
+    .distance-section h2,
+    .birthday-section h2 {
+        font-size: 31px;
+    }
+
+    .story-text {
+        font-size: 15px;
+        line-height: 1.85;
+    }
+
+    .music-section {
+        padding: 75px 20px;
+    }
+
+    .music-section h2 {
+        font-size: 36px;
+    }
+
+    .dedication {
+        padding: 20px;
+    }
+
+    .date-card span {
+        width: 65px;
+        height: 65px;
+    }
+
+    .answer-buttons {
+        flex-direction: column;
+    }
+
+    .answer-buttons button {
+        width: 230px;
+    }
+}
