@@ -1,27 +1,209 @@
-/* =========================================
-   ONE PAGE AT A TIME
-========================================= */
+/* =========================================================
+   FOR JULI 🩷
+   PINK / TULIP ROMANTIC THEME
+   CLICK-BY-CLICK PAGES
+========================================================= */
 
-main {
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background:
+        radial-gradient(circle at top, #ffe8f1 0%, #ffd5e5 35%, #ffc4dc 70%, #ffb7d3 100%);
+    color: #6d304b;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   BACKGROUND DECORATIONS
+========================================================= */
+
+body::before {
+    content: "🌷  🌷  🌷";
+    position: fixed;
+    top: 18px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    letter-spacing: 12px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: "🌷  🌷  🌷";
+    position: fixed;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 10px;
+    opacity: 0.45;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =========================================================
+   LOCK SCREEN
+========================================================= */
+
+#lock-screen {
+    position: fixed;
+    inset: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background:
+        radial-gradient(circle at 50% 20%, #fff2f7, transparent 35%),
+        linear-gradient(145deg, #ffdbe9, #ffc2d9);
+    z-index: 9999;
+}
+
+.lock-card {
+    width: min(420px, 100%);
+    padding: 42px 28px;
+    text-align: center;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 2px solid rgba(255, 145, 184, 0.35);
+    box-shadow:
+        0 20px 60px rgba(137, 47, 83, 0.18),
+        inset 0 0 30px rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(15px);
+}
+
+.lock-bow {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.lock-small {
+    font-size: 13px;
+    color: #a44c6e;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.lock-card h1 {
+    font-size: clamp(35px, 10vw, 52px);
+    color: #d94f82;
+    margin-bottom: 15px;
+}
+
+.lock-message {
+    line-height: 1.7;
+    font-size: 15px;
+    color: #78405a;
+    margin-bottom: 18px;
+}
+
+.lock-icon {
+    font-size: 35px;
+    margin: 12px 0 15px;
+}
+
+#secret-code {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #f2a1bd;
+    border-radius: 15px;
+    background: #fff7fa;
+    color: #7b3452;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 7px;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+#secret-code:focus {
+    border-color: #df5d8b;
+    box-shadow: 0 0 0 4px rgba(223, 93, 139, 0.12);
+}
+
+.lock-card button {
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #ee76a2, #d94f82);
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(191, 65, 111, 0.25);
+    transition: 0.25s ease;
+}
+
+.lock-card button:hover {
+    transform: translateY(-2px);
+}
+
+.lock-hint {
+    margin-top: 17px;
+    font-size: 12px;
+    color: #ad6682;
+}
+
+#lock-error {
+    min-height: 18px;
+    margin-top: 10px;
+    color: #c93565;
+    font-size: 13px;
+}
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+#main-content {
     position: relative;
-    overflow: hidden;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
 }
 
-/* Hide every story page by default */
-main > section {
+/* =========================================================
+   IMPORTANT:
+   PAGE-BY-PAGE SYSTEM
+   ONLY ONE PAGE IS SHOWN
+========================================================= */
+
+.page {
     display: none;
+    width: 100%;
+    min-height: 100vh;
+    padding: 65px 22px 90px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    animation: pageIn 0.45s ease;
 }
 
-/* Only the active page is visible */
-main > section.page-active {
-    display: block;
-    animation: pageFade 0.5s ease;
+.page.active {
+    display: flex;
 }
 
-@keyframes pageFade {
+@keyframes pageIn {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(12px);
     }
 
     to {
@@ -30,71 +212,280 @@ main > section.page-active {
     }
 }
 
-/* Prevent the whole website from scrolling */
-body.story-open {
-    overflow: hidden;
+/* =========================================================
+   HIDDEN
+========================================================= */
+
+.hidden {
+    display: none !important;
 }
 
-/* Make the active page fit the screen */
-main > section.page-active {
-    min-height: 100vh;
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    padding-bottom: 120px;
+/* =========================================================
+   CHAPTER LABEL
+========================================================= */
+
+.chapter {
+    color: #c84d78;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: lowercase;
+    margin-bottom: 14px;
 }
 
-/* Next button */
+/* =========================================================
+   HEADINGS
+========================================================= */
 
-.page-next-button {
+.page h2 {
+    width: min(760px, 100%);
+    color: #a93662;
+    font-size: clamp(30px, 7vw, 54px);
+    line-height: 1.15;
+    margin-bottom: 28px;
+    font-weight: 600;
+}
+
+.page h2::after {
+    content: "🌷";
     display: block;
-    margin: 45px auto 20px;
+    font-size: 20px;
+    margin-top: 12px;
+}
 
-    padding: 15px 38px;
+/* =========================================================
+   STORY TEXT
+========================================================= */
 
-    border: 2px solid #e39ab9;
-    border-radius: 40px;
+.story-text {
+    width: min(680px, 100%);
+    margin: 0 auto;
+}
 
-    background: #fff;
-    color: #bd668b;
-
-    font-family: "DM Sans", sans-serif;
+.story-text p {
+    color: #704054;
     font-size: 16px;
-
-    cursor: pointer;
-
-    transition: 0.3s ease;
+    line-height: 1.85;
+    margin-bottom: 22px;
 }
 
-.page-next-button:hover {
-    background: #e39ab9;
+/* =========================================================
+   IMAGES
+========================================================= */
+
+.story-image,
+.gift-image {
+    display: block;
+    width: min(520px, 92vw);
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: 25px;
+    border: 5px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 15px 40px rgba(135, 45, 80, 0.18);
+    margin: 0 auto 28px;
+}
+
+.gift-image {
+    max-height: 420px;
+}
+
+.photo-caption {
+    color: #9f4969;
+    font-size: 13px;
+    margin-top: -12px;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.next-button {
+    margin-top: 20px;
+    padding: 14px 28px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ed75a3, #d74f81);
     color: white;
-    transform: translateY(-2px);
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(180, 58, 101, 0.22);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.page-next-button:active {
-    transform: scale(0.96);
+.next-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(180, 58, 101, 0.28);
 }
 
+.next-button:active {
+    transform: translateY(0);
+}
 
-/* =========================================
+/* =========================================================
+   DATE PAGE
+========================================================= */
+
+.date-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 5px 0 35px;
+}
+
+.date-card span {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.78);
+    color: #d24f7d;
+    font-size: 25px;
+    font-weight: bold;
+    box-shadow: 0 8px 25px rgba(153, 45, 83, 0.12);
+}
+
+/* =========================================================
+   MUSIC PAGES
+========================================================= */
+
+.music-page {
+    padding-top: 70px;
+}
+
+.music-dedication {
+    color: #a44a6b;
+    font-size: 14px;
+    font-style: italic;
+    margin-top: -12px;
+    margin-bottom: 25px;
+}
+
+.music-card {
+    width: min(520px, 100%);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(218, 90, 132, 0.2);
+    box-shadow: 0 12px 35px rgba(133, 40, 77, 0.12);
+    text-align: left;
+    margin-bottom: 28px;
+}
+
+.play-button {
+    flex: 0 0 55px;
+    width: 55px;
+    height: 55px;
+    border: 0;
+    border-radius: 50%;
+    background: #e35b89;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(184, 53, 98, 0.22);
+}
+
+.music-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.music-info strong {
+    color: #923653;
+    font-size: 17px;
+}
+
+.music-info span {
+    color: #a85b77;
+    font-size: 13px;
+}
+
+.dedication {
+    width: min(680px, 100%);
+}
+
+.dedication p {
+    color: #704054;
+    font-size: 15px;
+    line-height: 1.85;
+    margin-bottom: 20px;
+}
+
+/* =========================================================
+   FINAL LETTER / COURTING PAGE
+========================================================= */
+
+.final-letter {
+    padding-bottom: 100px;
+}
+
+.final-letter h2 {
+    color: #b83e69;
+}
+
+.final-letter .story-text {
+    width: min(720px, 100%);
+}
+
+.final-letter .story-text p {
+    text-align: left;
+}
+
+/* =========================================================
    COURTING PHOTO
-========================================= */
+   IMG_2106.jpeg
+========================================================= */
 
 .courting-photo {
-    display: block;
-
-    width: min(85%, 360px);
-
-    margin: 25px auto;
-
-    border-radius: 25px;
-
-    border: 4px solid white;
-
-    box-shadow:
-        0 10px 30px rgba(190, 100, 140, 0.18);
-
+    width: min(430px, 90vw);
+    max-height: 500px;
     object-fit: cover;
+    border-radius: 28px;
+    border: 5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 18px 45px rgba(137, 40, 79, 0.2);
+    margin: 0 auto 30px;
 }
+
+/* =========================================================
+   QUESTION PAGE
+========================================================= */
+
+.question-page {
+    padding-bottom: 80px;
+}
+
+.final-question {
+    width: min(650px, 100%);
+    margin: 20px auto 30px;
+    padding: 25px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 2px solid rgba(224, 92, 137, 0.2);
+    color: #a73662;
+    font-size: clamp(20px, 5vw, 30px);
+    line-height: 1.5;
+    box-shadow: 0 12px 35px rgba(145, 41, 81, 0.1);
+}
+
+.answer-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.answer-buttons button {
+    padding: 13px 24px;
+    border: 0;
+    border
