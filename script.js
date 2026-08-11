@@ -3,12 +3,15 @@
 ========================= */
 
 function openStory() {
+
     const story = document.getElementById("story");
 
     if (story) {
+
         story.scrollIntoView({
             behavior: "smooth"
         });
+
     }
 
     createHearts(8);
@@ -22,6 +25,7 @@ function openStory() {
 let currentSong = null;
 let currentButton = null;
 
+
 function toggleMusic(songId, button) {
 
     const song = document.getElementById(songId);
@@ -29,7 +33,8 @@ function toggleMusic(songId, button) {
     if (!song) return;
 
 
-    // If clicking the song that is already playing
+    // pause current song
+
     if (currentSong === song && !song.paused) {
 
         song.pause();
@@ -43,7 +48,8 @@ function toggleMusic(songId, button) {
     }
 
 
-    // Stop another song first
+    // stop previous song
+
     if (currentSong) {
 
         currentSong.pause();
@@ -56,7 +62,8 @@ function toggleMusic(songId, button) {
     }
 
 
-    // Play selected song
+    // play selected song
+
     song.play()
         .then(() => {
 
@@ -71,12 +78,14 @@ function toggleMusic(songId, button) {
             button.innerHTML = "▶";
 
             alert(
-                "Tap the play button again to start the song ♡"
+                "tap the play button again to start the song ♡"
             );
+
         });
 
 
-    // When the song ends
+    // song ended
+
     song.onended = function () {
 
         button.innerHTML = "▶";
@@ -85,15 +94,17 @@ function toggleMusic(songId, button) {
 
             currentSong = null;
             currentButton = null;
+
         }
 
         createHearts(5);
+
     };
 }
 
 
 /* =========================
-   YES ANSWER
+   YES
 ========================= */
 
 function sayYes() {
@@ -102,16 +113,23 @@ function sayYes() {
 
     if (!answer) return;
 
+
     answer.innerHTML = `
         okay, you actually have no idea how happy
         that made me. ♡
+
         <br><br>
+
         i promise i’ll take this chance seriously.
+
         <br><br>
-        welcome back to my favorite chapter. ♡
+
+        welcome back to my favorite chapter. 🎀♡
     `;
 
+
     createHearts(25);
+
 
     setTimeout(() => {
 
@@ -125,7 +143,7 @@ function sayYes() {
 
 
 /* =========================
-   THINK ABOUT IT
+   NEED TIME
 ========================= */
 
 function thinkAboutIt() {
@@ -134,22 +152,29 @@ function thinkAboutIt() {
 
     if (!answer) return;
 
+
     answer.innerHTML = `
-        that’s okay.
+        that’s okay. ♡
+
         <br><br>
+
         take all the time you need.
         i’m not asking you to answer just because
         i made this.
+
         <br><br>
-        i just wanted you to know how i feel. ♡
+
+        i just wanted you to know how i feel.
+        🎀
     `;
+
 
     createHearts(8);
 }
 
 
 /* =========================
-   FLOATING HEARTS
+   FLOATING HEART
 ========================= */
 
 function createHeart() {
@@ -160,14 +185,18 @@ function createHeart() {
 
     heart.innerHTML = "♡";
 
+
     heart.style.left =
         Math.random() * 100 + "vw";
+
 
     heart.style.fontSize =
         15 + Math.random() * 20 + "px";
 
+
     heart.style.animationDuration =
         3 + Math.random() * 3 + "s";
+
 
     document.body.appendChild(heart);
 
@@ -180,6 +209,10 @@ function createHeart() {
 }
 
 
+/* =========================
+   CREATE HEARTS
+========================= */
+
 function createHearts(amount = 5) {
 
     for (let i = 0; i < amount; i++) {
@@ -189,6 +222,7 @@ function createHearts(amount = 5) {
             createHeart();
 
         }, i * 150);
+
     }
 }
 
@@ -200,15 +234,16 @@ function createHearts(amount = 5) {
 setInterval(() => {
 
     if (Math.random() > 0.65) {
+
         createHeart();
+
     }
 
 }, 3500);
 
 
 /* =========================
-   STOP MUSIC WHEN
-   LEAVING THE PAGE
+   STOP MUSIC WHEN LEAVING
 ========================= */
 
 document.addEventListener(
@@ -220,9 +255,13 @@ document.addEventListener(
             currentSong.pause();
 
             if (currentButton) {
+
                 currentButton.innerHTML = "▶";
+
             }
+
         }
+
     }
 );
 
